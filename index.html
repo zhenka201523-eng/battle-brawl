@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Battle Brawl</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#294d7d,#111a30);color:white;font-family:Arial}
+header{padding:12px;display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:auto}
+.logo{font-size:30px;font-weight:900;color:#ffdc59;text-shadow:3px 3px #844719}
+main{max-width:900px;margin:auto;padding:10px}.screen{display:none}.screen.active{display:block}
+.panel{background:linear-gradient(145deg,#376ba8,#203c6c);border:4px solid #ffdc59;border-radius:20px;padding:18px}
+h2{text-align:center;color:#ffe36b;margin:0 0 10px}.sub{text-align:center;color:#e3edff}
+button{border:0;border-radius:12px;padding:13px 20px;font-weight:900;background:linear-gradient(#ffe77b,#ffbd38);color:#38270f;box-shadow:0 5px #a66b1c}
+.blue{background:linear-gradient(#e0efff,#a9cbed);box-shadow:0 5px #527ba8}
+.menuButtons{display:grid;gap:15px;max-width:320px;margin:25px auto}.menuButtons button{font-size:20px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:#416fa6;border:3px solid #b8d9ff;border-radius:15px;text-align:center;padding:10px 5px}
+.card.selected{border-color:#ffe45c;box-shadow:0 0 0 3px #ffdb5866}.avatar{height:85px;display:flex;align-items:center;justify-content:center;font-size:55px}
+.name{font-weight:bold;font-size:18px}.rarity{font-size:12px;color:#ffeb9a;font-weight:bold;margin:4px}.stats{font-size:12px;margin-top:7px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
+#chosen,#homeSelected{text-align:center;margin-top:15px;color:#e7f0ff;font-weight:bold}
+canvas{display:block;width:100%;height:auto;aspect-ratio:900/560;background:#83c95b;border:4px solid #ffdc59;border-radius:12px;touch-action:none}
+.gamebar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+#mobile{display:none;justify-content:space-between;padding:12px}
+#stick{width:100px;height:100px;border:3px solid #ffffff90;border-radius:50%;background:#ffffff35;position:relative;touch-action:none}
+#knob{position:absolute;left:27px;top:27px;width:40px;height:40px;border-radius:50%;background:#ffdc61;border:3px solid white}
+#attack{width:76px;height:76px;border-radius:50%;background:#e94d59;color:white}
+.note{text-align:center;font-size:12px;color:#d9e5ff}
+@media(pointer:coarse){#mobile{display:flex}}@media(max-width:430px){.avatar{height:70px;font-size:45px}.name{font-size:16px}}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#294d7d">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+</head><body>
+<header><div class="logo">⚡ BATTLE BRAWL</div><div id="hud" style="display:none">⭐ <span id="score">0</span>　❤️ <span id="health">30</span></div></header>
+<main>
+<section id="home" class="screen active"><div class="panel"><h2>BATTLE BRAWL</h2><p class="sub">Готовий до битви?</p>
+<div class="menuButtons"><button id="playBtn">⚔️ ГРАТИ</button><button class="blue" id="fightersBtn">🦸 БІЙЦІ</button></div>
+<div id="homeSelected">Обраний боєць: Меоад</div></div></section>
+<section id="fighters" class="screen"><div class="panel"><h2>ВИБІР БІЙЦЯ</h2><p class="sub">Натисни на картку, потім «Обрати».</p>
+<div class="cards" id="cards"></div><div id="chosen">Вибрано: Меоад</div>
+<div class="actions"><button class="blue" id="fightersBack">← НАЗАД</button><button id="chooseBtn">ОБРАТИ</button></div></div></section>
+<section id="game" class="screen"><div class="gamebar"><b id="fighterLabel">🐱 Меоад</b><b id="gameStats">❤️ 30</b><button class="blue" id="menuBtn">МЕНЮ</button></div>
+<canvas id="arena" width="900" height="560"></canvas><div id="mobile"><div id="stick"><div id="knob"></div></div><button id="attack">АТАКА</button></div>
+<p class="note">ПК: WASD / стрілки, мишка або пробіл. Телефон: джойстик і атака.</p></section>
+</main>
+<script>
+const fighters=[
+{name:"Меоад",rarity:"Стартовий",attack:2,hp:30,armor:0,icon:"🐱"},
+{name:"Джемені",rarity:"Суперрідкісний",attack:45,hp:56,armor:0,icon:"💠"},
+{name:"Жед",rarity:"Міфічний",attack:68,hp:0,armor:100,icon:"🛡️"},
+{name:"Chat GPT",rarity:"Легендарний",attack:95,hp:0,armor:300,icon:"🤖"}];
+let selected=0,pending=0;
+const $=id=>document.getElementById(id);
+function screen(id){["home","fighters","game"].forEach(s=>$(s).classList.toggle("active",s===id));$("hud").style.display=id==="game"?"block":"none";}
+function renderCards(){$("cards").innerHTML="";fighters.forEach((f,i)=>{let c=document.createElement("div");c.className="card"+(i===pending?" selected":"");c.innerHTML='<div class="avatar">'+f.icon+'</div><div class="name">'+f.name+'</div><div class="rarity">'+f.rarity+'</div><div class="stats">⚔️ '+f.attack+'　'+(f.hp?"❤️ "+f.hp:"🛡️ "+f.armor)+'</div>';c.onclick=()=>{pending=i;renderCards();$("chosen").textContent="Вибрано: "+f.name;};$("cards").appendChild(c);});}
+$("fightersBtn").onclick=()=>{pending=selected;renderCards();$("chosen").textContent="Вибрано: "+fighters[pending].name;screen("fighters");};
+$("fightersBack").onclick=()=>screen("home");$("chooseBtn").onclick=()=>{selected=pending;$("homeSelected").textContent="Обраний боєць: "+fighters[selected].name;screen("home");};
+$("playBtn").onclick=startGame;$("menuBtn").onclick=()=>{active=false;screen("home");};
+const canvas=$("arena"),ctx=canvas.getContext("2d"),W=900,H=560;let player,bots=[],shots=[],score=0,keys={},mouse={x:650,y:280},lastShot=0,stick={x:0,y:0},inv=0,active=false;
+function startGame(){let f=fighters[selected],hp=f.hp||f.armor;player={x:450,y:280,r:19,hp:hp,maxHp:hp,attack:f.attack,speed:3.5};bots=[];shots=[];score=0;inv=0;lastShot=0;for(let i=0;i<4;i++)spawnBot();$("fighterLabel").textContent=f.icon+" "+f.name;hud();screen("game");active=true;}
+function hud(){let f=fighters[selected],v=Math.max(0,player.hp);$("gameStats").textContent=(f.hp?"❤️ ":"🛡️ ")+v;$("health").textContent=v;$("score").textContent=score;}
+function spawnBot(){let x,y;do{x=30+Math.random()*840;y=30+Math.random()*500;}while(Math.hypot(x-player.x,y-player.y)<170);bots.push({x,y,r:18,hp:Math.max(1,Math.ceil(100/Math.max(1,player.attack))),speed:.7});}
+function shoot(){if(!active||performance.now()-lastShot<400)return;lastShot=performance.now();let a=Math.atan2(mouse.y-player.y,mouse.x-player.x);shots.push({x:player.x,y:player.y,vx:Math.cos(a)*8,vy:Math.sin(a)*8,life:65,damage:player.attack});}
+window.addEventListener("keydown",e=>{keys[e.key.toLowerCase()]=true;if(e.code==="Space"){e.preventDefault();shoot();}});window.addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+canvas.onpointermove=e=>{let r=canvas.getBoundingClientRect();mouse.x=(e.clientX-r.left)*W/r.width;mouse.y=(e.clientY-r.top)*H/r.height;};canvas.onpointerdown=e=>{if(e.pointerType==="mouse")shoot();};
+const stickEl=$("stick"),knob=$("knob");let stickId=null;
+function moveStick(e){let r=stickEl.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,l=Math.hypot(dx,dy),m=34;if(l>m){dx=dx/l*m;dy=dy/l*m;}stick.x=dx/m;stick.y=dy/m;knob.style.transform="translate("+dx+"px,"+dy+"px)";}
+function release(){stickId=null;stick.x=stick.y=0;knob.style.transform="translate(0,0)";}
+stickEl.onpointerdown=e=>{stickId=e.pointerId;stickEl.setPointerCapture(stickId);moveStick(e);};stickEl.onpointermove=e=>{if(e.pointerId===stickId)moveStick(e);};stickEl.onpointerup=release;stickEl.onpointercancel=release;
+$("attack").onpointerdown=e=>{e.preventDefault();if(bots.length){let b=bots.reduce((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)<Math.hypot(b.x-player.x,b.y-player.y)?a:b);mouse={x:b.x,y:b.y};}shoot();};
+function circle(x,y,r,c){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=c;ctx.fill();ctx.strokeStyle="#26334a";ctx.lineWidth=3;ctx.stroke();}
+function draw(){ctx.fillStyle="#85cf59";ctx.fillRect(0,0,W,H);for(let y=0;y<H;y+=40)for(let x=0;x<W;x+=40)if((x/40+y/40)%2===0){ctx.fillStyle="#7bc451";ctx.fillRect(x,y,40,40);}[[125,105],[770,120],[190,450],[700,430],[450,80],[455,485]].forEach(([x,y])=>{ctx.fillStyle="#398b45";ctx.beginPath();ctx.arc(x,y,26,0,7);ctx.fill();});bots.forEach(b=>{circle(b.x,b.y,b.r,"#e95d67");ctx.fillStyle="white";ctx.fillRect(b.x-8,b.y-5,5,5);ctx.fillRect(b.x+3,b.y-5,5,5);});shots.forEach(s=>circle(s.x,s.y,7,"#5eeaff"));if(player){circle(player.x,player.y,player.r,["#4d83ff","#8b75ed","#b6b9c4","#4d83ff"][selected]);ctx.font="25px Arial";ctx.textAlign="center";ctx.fillText(fighters[selected].icon,player.x,player.y+9);ctx.fillStyle="#14243e";ctx.fillRect(player.x-22,player.y-38,44,6);ctx.fillStyle="#55ed73";ctx.fillRect(player.x-22,player.y-38,44*Math.max(0,player.hp/player.maxHp),6);}}
+function loop(){if(active&&player){let dx=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0)+stick.x,dy=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0)+stick.y,l=Math.hypot(dx,dy);if(l>1){dx/=l;dy/=l;}player.x=Math.max(22,Math.min(W-22,player.x+dx*player.speed));player.y=Math.max(22,Math.min(H-22,player.y+dy*player.speed));if(inv>0)inv--;shots.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.life--;});shots=shots.filter(s=>s.life>0&&s.x>-10&&s.x<W+10&&s.y>-10&&s.y<H+10);bots.forEach(b=>{let a=Math.atan2(player.y-b.y,player.x-b.x);b.x+=Math.cos(a)*b.speed;b.y+=Math.sin(a)*b.speed;if(Math.hypot(player.x-b.x,player.y-b.y)<player.r+b.r&&inv===0){player.hp-=5;inv=45;hud();if(player.hp<=0){active=false;$("gameStats").textContent="Поразка!";}}shots.forEach(s=>{if(s.life>0&&Math.hypot(s.x-b.x,s.y-b.y)<b.r+7){b.hp-=s.damage;s.life=0;}});});let n=bots.length;bots=bots.filter(b=>b.hp>0);if(bots.length<n){score++;spawnBot();hud();}}draw();requestAnimationFrame(loop);}
+renderCards();loop();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));
+}
+</script>
+
+</body></html>
