@@ -1,4 +1,5 @@
-const CACHE_NAME = "battle-brawl-v3";
+
+const CACHE_NAME = "battle-brawl-v21";
 
 const FILES = [
   "./",
@@ -10,7 +11,8 @@ const FILES = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES))
   );
   self.skipWaiting();
 });
@@ -31,6 +33,8 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    fetch(event.request).catch(() =>
+      caches.match(event.request)
+    )
   );
 });
