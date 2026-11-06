@@ -3,245 +3,222 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#294d7d">
-<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#21143b">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>BATTLE BRAWL</title>
+<title>BATTLE BRAWL 2.2</title>
+
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;background:radial-gradient(circle,#383866,#111120);
- color:white;font-family:Arial;display:flex;justify-content:center;align-items:center;
+* {
+  box-sizing: border-box;
 }
-.panel{
- width:min(920px,96%);min-height:90vh;padding:20px;background:#20203a;
- border:3px solid #6868a5;border-radius:22px;display:flex;
- flex-direction:column;gap:15px;
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #100b20, #28164b, #111a30);
+  color: white;
+  min-height: 100vh;
 }
-h1{text-align:center;color:#ffe36e;font-size:clamp(32px,7vw,55px)}
-h2{text-align:center}
-button{
- padding:13px;border:0;border-radius:12px;background:#ffca4b;
- color:#29203b;font-size:17px;font-weight:bold;cursor:pointer;
+
+header {
+  text-align: center;
+  padding: 25px 10px;
+  background: #1c1235;
+  border-bottom: 3px solid #a34cff;
 }
-button:disabled{opacity:.5}
-.secondary{background:#7777d5;color:white}
-.menu{display:grid;gap:12px;max-width:400px;width:100%;margin:auto}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.fighter,.player{
- background:#303052;border:2px solid #66669a;border-radius:15px;
- padding:14px;text-align:center;
+
+header h1 {
+  margin: 0;
+  color: #d9a5ff;
+  font-size: 34px;
+  text-shadow: 0 0 15px #9b42ff;
 }
-.emoji{font-size:48px}
-.fighter p{color:#ddd}
-.arena{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.avatar{font-size:clamp(55px,12vw,95px)}
-.hp{height:14px;background:#6b293b;border-radius:20px;overflow:hidden;margin:8px 0}
-.hp div{height:100%;background:#55dc83;transition:.2s}
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.status{text-align:center;color:#ffe36e;min-height:25px;font-weight:bold}
-.hidden{display:none!important}
-footer{text-align:center;color:#aaa;font-size:12px;margin-top:auto}
-@media(orientation:landscape) and (max-height:600px){
- .panel{min-height:96vh;padding:10px 20px;gap:9px}
- .avatar{font-size:48px}
- .fighter{padding:8px}
- .emoji{font-size:34px}
- button{padding:9px}
+
+header p {
+  color: #c9b8df;
 }
-@media(max-width:500px){
- .panel{padding:14px}
- .actions{grid-template-columns:1fr 1fr}
- .actions button:last-child{grid-column:span 2}
- .player{padding:9px 4px}
+
+#currency {
+  text-align: center;
+  margin: 15px;
+  padding: 12px;
+  background: #352052;
+  border: 1px solid #a34cff;
+  border-radius: 12px;
+  font-size: 19px;
+}
+
+main {
+  width: min(95%, 650px);
+  margin: 20px auto;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+h2 {
+  text-align: center;
+  color: #d9a5ff;
+}
+
+.menu-button {
+  display: block;
+  width: 100%;
+  padding: 17px;
+  margin: 12px 0;
+  border: 2px solid #a34cff;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #482477, #29204b);
+  color: white;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.menu-button:active {
+  transform: scale(.97);
+}
+
+.back {
+  background: #302344;
+  border-color: #75618e;
+}
+
+.card {
+  background: #241a3a;
+  border: 1px solid #7950a9;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 12px 0;
+  text-align: center;
+}
+
+.card h3 {
+  color: #d9a5ff;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #a99bbd;
+}
+
+@media (orientation: landscape) {
+  main {
+    max-width: 900px;
+  }
+
+  #fighters-list,
+  #shop-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 </style>
 </head>
+
 <body>
-<main class="panel">
-<h1>BATTLE BRAWL</h1>
 
-<section id="home">
-<p style="text-align:center">Вітаємо на арені!</p>
-<div class="menu">
-<button onclick="show('fighters')">⚔️ Бійці</button>
-<button onclick="startBattle()">🎮 Грати</button>
+<header>
+  <h1>⚔️ BATTLE BRAWL</h1>
+  <p>HALLOWEEN UPDATE — VERSION 2.2</p>
+</header>
+
+<div id="currency">
+  💜 Flayyers: <span id="coins">0</span>
 </div>
+
+<main>
+
+<section id="menu" class="screen active">
+  <h2>ГОЛОВНЕ МЕНЮ</h2>
+
+  <button class="menu-button" onclick="showScreen('fighters')">
+    🥊 БІЙЦІ
+  </button>
+
+  <button class="menu-button" onclick="showScreen('modes')">
+    ⚔️ ГРАТИ
+  </button>
+
+  <button class="menu-button" onclick="showScreen('shop')">
+    🛒 МАГАЗИН
+  </button>
 </section>
 
-<section id="fighters" class="hidden">
-<h2>Обери бійця</h2>
-<div class="cards" id="fighterCards"></div>
-<button class="secondary" onclick="show('home')">⬅ Назад</button>
+<section id="fighters" class="screen">
+  <h2>🥊 БІЙЦІ</h2>
+  <div id="fighters-list"></div>
+  <button class="menu-button back" onclick="showScreen('menu')">
+    ⬅ НАЗАД
+  </button>
 </section>
 
-<section id="battle" class="hidden">
-<h2>⚔️ БІЙ!</h2>
-<div class="arena">
-<div class="player">
-<div id="heroEmoji" class="avatar">🐱</div>
-<b id="heroName"></b>
-<div class="hp"><div id="heroBar"></div></div>
-<span id="heroHp"></span>
-</div>
-<div class="player">
-<div class="avatar">👾</div>
-<b>Суперник</b>
-<div class="hp"><div id="enemyBar"></div></div>
-<span id="enemyHp"></span>
-</div>
-</div>
-<div class="status" id="status">Твій хід!</div>
-<div class="actions">
-<button id="attackBtn" onclick="attack()">👊 Атака</button>
-<button id="specialBtn" onclick="special()">💥 Суператака</button>
-<button id="defendBtn" class="secondary" onclick="defend()">🛡️ Захист</button>
-</div>
-<div class="menu">
-<button id="again" class="hidden" onclick="startBattle()">🔄 Ще раз</button>
-<button class="secondary" onclick="show('home')">🏠 Меню</button>
-</div>
+<section id="modes" class="screen">
+  <h2>⚔️ РЕЖИМИ ГРИ</h2>
+
+  <button class="menu-button" onclick="showScreen('difficulty')">
+    1️⃣ 1 НА 1
+  </button>
+
+  <button class="menu-button back" onclick="showScreen('menu')">
+    ⬅ НАЗАД
+  </button>
 </section>
-<footer>BATTLE BRAWL • VERSION 2.1</footer>
+
+<section id="difficulty" class="screen">
+  <h2>ОБЕРИ СКЛАДНІСТЬ</h2>
+
+  <button class="menu-button" onclick="startGame('easy')">
+    🟢 ЛЕГКО
+  </button>
+
+  <button class="menu-button" onclick="startGame('normal')">
+    🔵 НОРМАЛЬНО
+  </button>
+
+  <button class="menu-button" onclick="startGame('hard')">
+    🟠 ХАРДОВО
+  </button>
+
+  <button class="menu-button" onclick="startGame('extreme')">
+    🔴 ЕКСТРЕМАЛЬНО
+  </button>
+
+  <button class="menu-button back" onclick="showScreen('modes')">
+    ⬅ НАЗАД
+  </button>
+</section>
+
+<section id="shop" class="screen">
+  <h2>🛒 МАГАЗИН</h2>
+  <div id="shop-list"></div>
+
+  <button class="menu-button back" onclick="showScreen('menu')">
+    ⬅ НАЗАД
+  </button>
+</section>
+
+<section id="battle" class="screen">
+  <h2>⚔️ БІЙ</h2>
+  <div id="battle-content"></div>
+
+  <button class="menu-button back" onclick="showScreen('menu')">
+    🏠 МЕНЮ
+  </button>
+</section>
+
 </main>
 
-<script>
-"use strict";
-
-const fighters=[
-{name:"Меоад",rarity:"Стартовий",emoji:"🐱",atk:2,hp:30},
-{name:"Джемені",rarity:"Супер рідкісний",emoji:"💎",atk:45,hp:56},
-{name:"Жед",rarity:"Міфічний",emoji:"🐉",atk:68,hp:100},
-{name:"Chat GPT",rarity:"Легендарний",emoji:"🤖",atk:95,hp:300}
-];
-
-let chosen=0,hero=30,maxHero=30,enemy=100,maxEnemy=100;
-let guarding=false,usedSpecial=false,ended=false,busy=false;
-
-const el=id=>document.getElementById(id);
-
-function show(id){
-["home","fighters","battle"].forEach(x=>{
-el(x).classList.toggle("hidden",x!==id);
-});
-}
-
-function renderFighters(){
-el("fighterCards").innerHTML=fighters.map((f,i)=>`
-<div class="fighter">
-<div class="emoji">${f.emoji}</div>
-<b>${f.name}</b>
-<p>${f.rarity}</p>
-<p>⚔️ ${f.atk} | ❤️ ${f.hp}</p>
-<button onclick="choose(${i})">${chosen===i?"Обрано ✓":"Обрати"}</button>
-</div>`).join("");
-}
-
-function choose(i){
-chosen=i;
-renderFighters();
-}
-
-function update(){
-el("heroHp").textContent=hero+" / "+maxHero;
-el("enemyHp").textContent=enemy+" / "+maxEnemy;
-el("heroBar").style.width=(hero/maxHero*100)+"%";
-el("enemyBar").style.width=(enemy/maxEnemy*100)+"%";
-}
-
-function buttons(disabled){
-["attackBtn","specialBtn","defendBtn"].forEach(id=>{
-el(id).disabled=disabled;
-});
-}
-
-function startBattle(){
-const f=fighters[chosen];
-maxHero=hero=f.hp;
-maxEnemy=enemy=100;
-guarding=false;
-usedSpecial=false;
-ended=false;
-busy=false;
-el("heroEmoji").textContent=f.emoji;
-el("heroName").textContent=f.name;
-el("status").textContent="Твій хід!";
-el("specialBtn").textContent="💥 Суператака";
-el("again").classList.add("hidden");
-buttons(false);
-update();
-show("battle");
-}
-
-function finish(message){
-ended=true;
-busy=false;
-buttons(true);
-el("status").textContent=message;
-el("again").classList.remove("hidden");
-}
-
-function enemyTurn(){
-if(ended)return;
-const damage=guarding?6:12;
-guarding=false;
-hero=Math.max(0,hero-damage);
-update();
-busy=false;
-if(hero<=0){
-finish("Ти програв! Спробуй ще раз.");
-}else{
-el("status").textContent="Суперник атакував. Твій хід!";
-buttons(false);
-}
-}
-
-function playerAttack(damage,message){
-if(ended||busy)return;
-busy=true;
-buttons(true);
-enemy=Math.max(0,enemy-damage);
-update();
-if(enemy<=0){
-finish("Перемога! 🏆");
-return;
-}
-el("status").textContent=message;
-setTimeout(enemyTurn,600);
-}
-
-function attack(){
-playerAttack(fighters[chosen].atk,"Ти атакував!");
-}
-
-function special(){
-if(ended||busy||usedSpecial)return;
-usedSpecial=true;
-el("specialBtn").textContent="💥 Використано";
-playerAttack(Math.round(fighters[chosen].atk*1.8),"Суператака!");
-}
-
-function defend(){
-if(ended||busy)return;
-busy=true;
-guarding=true;
-buttons(true);
-el("status").textContent="Захист активовано!";
-setTimeout(enemyTurn,600);
-}
-
-renderFighters();
-show("home");
-</script>
-
-<script>
-if("serviceWorker" in navigator){
-window.addEventListener("load",()=>{
-navigator.serviceWorker.register("./service-worker.js")
-.catch(error=>console.error("PWA:",error));
-});
-}
-</script>
+<footer>
+  BATTLE BRAWL © 2026
+</footer>
 </body>
 </html>
