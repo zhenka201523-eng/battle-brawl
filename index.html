@@ -3,165 +3,202 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#21143b">
 <link rel="manifest" href="./manifest.webmanifest">
 <title>BATTLE BRAWL 2.2</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:white;
-  background:linear-gradient(135deg,#100b20,#28164b,#111a30);
-  min-height:100vh;
+ margin:0;
+ min-height:100vh;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:linear-gradient(135deg,#100b20,#28164b,#111a30);
 }
+
 header{
-  text-align:center;
-  padding:22px 10px;
-  background:#1c1235;
-  border-bottom:3px solid #a34cff;
+ text-align:center;
+ padding:18px 10px;
+ background:#1c1235;
+ border-bottom:3px solid #a34cff;
 }
+
 header h1{
-  margin:0;
-  color:#d9a5ff;
-  font-size:34px;
-  text-shadow:0 0 15px #9b42ff;
+ margin:0;
+ font-size:32px;
+ color:#d9a5ff;
+ text-shadow:0 0 15px #9b42ff;
 }
-header p{color:#c9b8df}
+
+header p{color:#c9b8df;margin:8px 0 0}
+
 #currency{
-  text-align:center;
-  margin:15px;
-  padding:12px;
-  background:#352052;
-  border:1px solid #a34cff;
-  border-radius:12px;
-  font-size:19px;
+ text-align:center;
+ margin:12px auto;
+ padding:12px;
+ width:min(94%,700px);
+ background:#352052;
+ border:1px solid #a34cff;
+ border-radius:12px;
+ font-size:19px;
 }
+
 main{
-  width:min(95%,700px);
-  margin:20px auto;
+ width:min(95%,700px);
+ margin:15px auto;
 }
+
 .screen{display:none}
 .screen.active{display:block}
+
 h2{
-  text-align:center;
-  color:#d9a5ff;
+ text-align:center;
+ color:#d9a5ff;
 }
+
 .menu-button{
-  display:block;
-  width:100%;
-  padding:16px;
-  margin:12px 0;
-  border:2px solid #a34cff;
-  border-radius:14px;
-  background:linear-gradient(135deg,#482477,#29204b);
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
+ display:block;
+ width:100%;
+ padding:15px;
+ margin:10px 0;
+ border:2px solid #a34cff;
+ border-radius:14px;
+ background:linear-gradient(135deg,#482477,#29204b);
+ color:white;
+ font-size:17px;
+ font-weight:bold;
+ cursor:pointer;
 }
+
 .menu-button:active{transform:scale(.97)}
-.menu-button:disabled{opacity:.5;cursor:not-allowed}
+.menu-button:disabled{opacity:.45;cursor:not-allowed}
+
 .back{
-  background:#302344;
-  border-color:#75618e;
+ background:#302344;
+ border-color:#75618e;
 }
+
 .card{
-  background:#241a3a;
-  border:1px solid #7950a9;
-  border-radius:15px;
-  padding:15px;
-  margin:12px 0;
-  text-align:center;
+ background:#241a3a;
+ border:1px solid #7950a9;
+ border-radius:15px;
+ padding:15px;
+ margin:12px 0;
+ text-align:center;
 }
-.card h3{color:#d9a5ff}
+
+.card h3{color:#d9a5ff;margin-top:5px}
+
 .stats{
-  display:flex;
-  justify-content:space-around;
-  flex-wrap:wrap;
-  gap:8px;
+ display:flex;
+ justify-content:space-around;
+ flex-wrap:wrap;
+ gap:8px;
 }
+
+.selected{
+ border:2px solid #51df85;
+ box-shadow:0 0 12px #51df8566;
+}
+
 .health{
-  height:15px;
-  background:#492b52;
-  border-radius:20px;
-  overflow:hidden;
-  margin:10px 0;
+ height:15px;
+ background:#492b52;
+ border-radius:20px;
+ overflow:hidden;
+ margin:10px 0;
 }
+
 .health-fill{
-  height:100%;
-  background:#51df85;
-  width:100%;
-  transition:width .2s;
+ height:100%;
+ background:#51df85;
+ transition:width .2s;
 }
+
+.enemy-fill{background:#ff5353}
+
+#battle-message{
+ min-height:25px;
+ color:#e6caff;
+ font-weight:bold;
+}
+
 footer{
-  text-align:center;
-  padding:20px;
-  color:#a99bbd;
+ text-align:center;
+ padding:20px;
+ color:#a99bbd;
 }
+
 @media(orientation:landscape){
-  main{max-width:950px}
-  #fighters-list,#shop-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-  }
+ main{max-width:950px}
+ #fighters-list,#shop-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+ }
+}
+
+@media(max-width:400px){
+ header h1{font-size:26px}
+ .menu-button{padding:13px;font-size:15px}
 }
 </style>
 </head>
 
 <body>
+
 <header>
-  <h1>⚔️ BATTLE BRAWL</h1>
-  <p>🎃 HALLOWEEN UPDATE — VERSION 2.2</p>
+ <h1>⚔️ BATTLE BRAWL</h1>
+ <p>🎃 HALLOWEEN UPDATE — VERSION 2.2</p>
 </header>
 
 <div id="currency">
-  💜 Flayyers: <span id="coins">0</span>
+ 💜 Flayyers: <span id="coins">0</span>
 </div>
 
 <main>
 
 <section id="menu" class="screen active">
-  <h2>ГОЛОВНЕ МЕНЮ</h2>
-  <button class="menu-button" onclick="showScreen('fighters')">🥊 БІЙЦІ</button>
-  <button class="menu-button" onclick="showScreen('modes')">⚔️ ГРАТИ</button>
-  <button class="menu-button" onclick="showScreen('shop')">🛒 МАГАЗИН</button>
+ <h2>🏠 ГОЛОВНЕ МЕНЮ</h2>
+ <button class="menu-button" onclick="showScreen('fighters')">🥊 БІЙЦІ</button>
+ <button class="menu-button" onclick="showScreen('modes')">⚔️ ГРАТИ</button>
+ <button class="menu-button" onclick="showScreen('shop')">🛒 МАГАЗИН</button>
 </section>
 
 <section id="fighters" class="screen">
-  <h2>🥊 БІЙЦІ</h2>
-  <div id="fighters-list"></div>
-  <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
+ <h2>🥊 ВИБІР БІЙЦЯ</h2>
+ <div id="fighters-list"></div>
+ <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
 </section>
 
 <section id="modes" class="screen">
-  <h2>⚔️ РЕЖИМИ ГРИ</h2>
-  <button class="menu-button" onclick="showScreen('difficulty')">1️⃣ 1 НА 1</button>
-  <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
+ <h2>⚔️ РЕЖИМИ ГРИ</h2>
+ <button class="menu-button" onclick="showScreen('difficulty')">1️⃣ 1 НА 1</button>
+ <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
 </section>
 
 <section id="difficulty" class="screen">
-  <h2>🎚️ СКЛАДНІСТЬ</h2>
-  <button class="menu-button" onclick="startGame('easy')">🟢 ЛЕГКО</button>
-  <button class="menu-button" onclick="startGame('normal')">🔵 НОРМАЛЬНО</button>
-  <button class="menu-button" onclick="startGame('hard')">🟠 ХАРДОВО</button>
-  <button class="menu-button" onclick="startGame('extreme')">🔴 ЕКСТРЕМАЛЬНО</button>
-  <button class="menu-button back" onclick="showScreen('modes')">⬅ НАЗАД</button>
+ <h2>🎚️ СКЛАДНІСТЬ</h2>
+ <button class="menu-button" onclick="startGame('easy')">🟢 ЛЕГКО</button>
+ <button class="menu-button" onclick="startGame('normal')">🔵 НОРМАЛЬНО</button>
+ <button class="menu-button" onclick="startGame('hard')">🟠 ХАРДОВО</button>
+ <button class="menu-button" onclick="startGame('extreme')">🔴 ЕКСТРЕМАЛЬНО</button>
+ <button class="menu-button back" onclick="showScreen('modes')">⬅ НАЗАД</button>
 </section>
 
 <section id="shop" class="screen">
-  <h2>🛒 МАГАЗИН</h2>
-  <div id="shop-list"></div>
-  <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
+ <h2>🛒 МАГАЗИН</h2>
+ <div id="shop-list"></div>
+ <button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
 </section>
 
 <section id="battle" class="screen">
-  <h2>⚔️ БІЙ</h2>
-  <div id="battle-content"></div>
-  <button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button>
+ <h2>⚔️ БІЙ</h2>
+ <div id="battle-content"></div>
+ <button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button>
 </section>
 
 </main>
@@ -170,240 +207,294 @@ footer{
 
 <script>
 const fighters = [
-  {name:"Меоад",emoji:"🐱",rarity:"Звичайний",attack:2,hp:30},
-  {name:"Джемені",emoji:"💎",rarity:"Надрідкісний",attack:45,hp:56},
-  {name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},
-  {name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300}
+ {name:"Меоад",emoji:"🐱",rarity:"Звичайний",attack:40,hp:100},
+ {name:"Джемені",emoji:"💎",rarity:"Надрідкісний",attack:45,hp:56},
+ {name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},
+ {name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300}
 ];
 
 const boxes = [
-  "📦 Common Box",
-  "💙 Rare Box",
-  "💜 Epic Box",
-  "🔮 Mythic Box",
-  "👑 Legendary Box"
+ "📦 Common Box",
+ "💙 Rare Box",
+ "💜 Epic Box",
+ "🔮 Mythic Box",
+ "👑 Legendary Box"
 ];
 
+const difficulties = {
+ easy:{name:"Легко",hp:50,attack:5},
+ normal:{name:"Нормально",hp:100,attack:15},
+ hard:{name:"Хардово",hp:150,attack:25},
+ extreme:{name:"Екстремально",hp:250,attack:40}
+};
+
 let selectedFighter = 0;
+let coins = Number(localStorage.getItem("bbCoins")) || 0;
+
 let playerHP = 0;
 let enemyHP = 0;
 let enemyMaxHP = 0;
 let enemyAttack = 0;
+let currentLevel = "";
 let specialUsed = false;
 let defending = false;
 let gameOver = false;
 
+function updateCoins(){
+ document.getElementById("coins").textContent = coins;
+ localStorage.setItem("bbCoins",coins);
+}
+
 function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>{
-    s.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".screen").forEach(screen=>{
+  screen.classList.remove("active");
+ });
+
+ const target = document.getElementById(id);
+ if(target) target.classList.add("active");
 }
 
 function renderFighters(){
-  const list = document.getElementById("fighters-list");
-  list.innerHTML = "";
+ const list = document.getElementById("fighters-list");
+ list.innerHTML = "";
 
-  fighters.forEach((f,i)=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${f.emoji} ${f.name}</h3>
-      <p>Рідкість: ${f.rarity}</p>
-      <div class="stats">
-        <span>❤️ ${f.hp} HP</span>
-        <span>⚔️ ${f.attack} атака</span>
-      </div>
-      <button class="menu-button" onclick="selectFighter(${i})">
-        ${selectedFighter===i?"✅ ОБРАНО":"ОБРАТИ"}
-      </button>
-    `;
-    list.appendChild(card);
-  });
+ fighters.forEach((f,i)=>{
+  const card = document.createElement("div");
+  card.className = "card" + (selectedFighter===i ? " selected":"");
+
+  const title = document.createElement("h3");
+  title.textContent = f.emoji+" "+f.name;
+
+  const rarity = document.createElement("p");
+  rarity.textContent = "Рідкість: "+f.rarity;
+
+  const stats = document.createElement("div");
+  stats.className = "stats";
+  stats.innerHTML =
+   `<span>❤️ ${f.hp} HP</span>
+    <span>⚔️ ${f.attack} атака</span>`;
+
+  const button = document.createElement("button");
+  button.className = "menu-button";
+  button.textContent =
+   selectedFighter===i ? "✅ ОБРАНО":"ОБРАТИ";
+
+  button.onclick = ()=>selectFighter(i);
+
+  card.append(title,rarity,stats,button);
+  list.appendChild(card);
+ });
 }
 
 function selectFighter(i){
-  selectedFighter = i;
-  renderFighters();
+ if(i<0 || i>=fighters.length) return;
+ selectedFighter = i;
+ renderFighters();
 }
 
 function renderShop(){
-  const list = document.getElementById("shop-list");
-  list.innerHTML = "";
+ const list = document.getElementById("shop-list");
+ list.innerHTML = "";
 
-  boxes.forEach(name=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h3>${name}</h3>
-      <p>Вміст з'явиться в наступних оновленнях.</p>
-      <button class="menu-button" disabled>🔒 СКОРО</button>
-    `;
-    list.appendChild(card);
-  });
-
-  const skins = document.createElement("div");
-  skins.className = "card";
-  skins.innerHTML = `
-    <h3>🎨 СКІНИ</h3>
-    <p>Нові образи бійців — скоро!</p>
+ boxes.forEach(name=>{
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+   <h3>${name}</h3>
+   <p>Вміст з'явиться в наступних оновленнях.</p>
+   <button class="menu-button" disabled>🔒 СКОРО</button>
   `;
-  list.appendChild(skins);
-}
+  list.appendChild(card);
+ });
 
-const difficulties = {
-  easy:{name:"Легко",hp:50,attack:5},
-  normal:{name:"Нормально",hp:100,attack:15},
-  hard:{name:"Хардово",hp:150,attack:25},
-  extreme:{name:"Екстремально",hp:250,attack:40}
-};
+ const skins = document.createElement("div");
+ skins.className = "card";
+ skins.innerHTML = `
+  <h3>🎨 СКІНИ</h3>
+  <p>Нові образи бійців — скоро!</p>
+ `;
+ list.appendChild(skins);
+}
 
 function startGame(level){
-  const enemy = difficulties[level];
+ const enemy = difficulties[level];
+ if(!enemy) return;
 
-  playerHP = fighters[selectedFighter].hp;
-  enemyHP = enemy.hp;
-  enemyMaxHP = enemy.hp;
-  enemyAttack = enemy.attack;
-  specialUsed = false;
-  defending = false;
-  gameOver = false;
+ currentLevel = enemy.name;
 
-  showScreen("battle");
-  renderBattle(enemy.name);
+ playerHP = fighters[selectedFighter].hp;
+ enemyHP = enemy.hp;
+ enemyMaxHP = enemy.hp;
+ enemyAttack = enemy.attack;
+
+ specialUsed = false;
+ defending = false;
+ gameOver = false;
+
+ showScreen("battle");
+ renderBattle();
 }
 
-function renderBattle(levelName=""){
-  const f = fighters[selectedFighter];
+function renderBattle(){
+ const f = fighters[selectedFighter];
 
-  document.getElementById("battle-content").innerHTML = `
-    <div class="card">
-      <h3>${f.emoji} ${f.name}</h3>
-      <p>❤️ Гравець: <span id="player-hp">${playerHP}</span> / ${f.hp}</p>
-      <div class="health">
-        <div class="health-fill" id="player-bar"
-          style="width:${playerHP/f.hp*100}%"></div>
-      </div>
-    </div>
+ document.getElementById("battle-content").innerHTML = `
+  <div class="card">
+   <h3>${f.emoji} ${f.name}</h3>
+   <p>❤️ Гравець: <span id="player-hp">${playerHP}</span> / ${f.hp}</p>
+   <div class="health">
+    <div class="health-fill" id="player-bar"
+     style="width:${playerHP/f.hp*100}%"></div>
+   </div>
+  </div>
 
-    <div class="card">
-      <h3>👹 Супротивник</h3>
-      <p>Складність: ${levelName}</p>
-      <p>❤️ Ворог: <span id="enemy-hp">${enemyHP}</span> / ${enemyMaxHP}</p>
-      <div class="health">
-        <div class="health-fill" id="enemy-bar"
-          style="width:${enemyHP/enemyMaxHP*100}%"></div>
-      </div>
-    </div>
+  <div class="card">
+   <h3>👹 Супротивник</h3>
+   <p>Складність: ${currentLevel}</p>
+   <p>❤️ Ворог: <span id="enemy-hp">${enemyHP}</span> / ${enemyMaxHP}</p>
+   <div class="health">
+    <div class="health-fill enemy-fill" id="enemy-bar"
+     style="width:${enemyHP/enemyMaxHP*100}%"></div>
+   </div>
+  </div>
 
-    <div class="card">
-      <button class="menu-button" onclick="playerAttack()">⚔️ АТАКА</button>
-      <button class="menu-button" id="special-button"
-        onclick="playerSpecial()">💥 СУПЕРАТАКА</button>
-      <button class="menu-button" onclick="playerDefend()">🛡️ ЗАХИСТ</button>
-      <p id="battle-message">Бій починається!</p>
-    </div>
-  `;
+  <div class="card">
+   <button class="menu-button" id="attack-button" onclick="playerAttack()">⚔️ АТАКА</button>
+   <button class="menu-button" id="special-button" onclick="playerSpecial()">💥 СУПЕРАТАКА</button>
+   <button class="menu-button" id="defend-button" onclick="playerDefend()">🛡️ ЗАХИСТ</button>
+   <p id="battle-message">Бій починається!</p>
+  </div>
+ `;
+
+ updateBattle();
 }
 
 function updateBattle(){
-  const f = fighters[selectedFighter];
+ const f = fighters[selectedFighter];
 
-  document.getElementById("player-hp").textContent = playerHP;
-  document.getElementById("enemy-hp").textContent = enemyHP;
+ document.getElementById("player-hp").textContent = playerHP;
+ document.getElementById("enemy-hp").textContent = enemyHP;
 
-  document.getElementById("player-bar").style.width =
-    Math.max(0,playerHP/f.hp*100)+"%";
+ document.getElementById("player-bar").style.width =
+  Math.max(0,playerHP/f.hp*100)+"%";
 
-  document.getElementById("enemy-bar").style.width =
-    Math.max(0,enemyHP/enemyMaxHP*100)+"%";
+ document.getElementById("enemy-bar").style.width =
+  Math.max(0,enemyHP/enemyMaxHP*100)+"%";
 
-  document.getElementById("special-button").disabled = specialUsed;
+ document.getElementById("special-button").disabled =
+  specialUsed || gameOver;
+
+ document.getElementById("attack-button").disabled = gameOver;
+ document.getElementById("defend-button").disabled = gameOver;
 }
 
 function finishBattle(playerWon){
-  gameOver = true;
+ if(gameOver) return;
 
-  const message = document.getElementById("battle-message");
+ gameOver = true;
 
-  if(playerWon){
-    message.textContent = "🏆 ПЕРЕМОГА!";
-    document.getElementById("coins").textContent =
-      Number(document.getElementById("coins").textContent)+10;
-  }else{
-    message.textContent = "💀 ПОРАЗКА!";
-  }
+ const message = document.getElementById("battle-message");
+
+ if(playerWon){
+  coins += 10;
+  updateCoins();
+  message.textContent = "🏆 ПЕРЕМОГА! +10 Flayyers";
+ }else{
+  message.textContent = "💀 ПОРАЗКА!";
+ }
+
+ updateBattle();
 }
 
 function enemyTurn(){
-  if(gameOver) return;
+ if(gameOver) return;
 
-  let damage = enemyAttack;
+ let damage = enemyAttack;
 
-  if(defending){
-    damage = Math.ceil(damage/2);
-    defending = false;
-  }
+ if(defending){
+  damage = Math.ceil(damage/2);
+  defending = false;
+ }
 
-  playerHP = Math.max(0,playerHP-damage);
+ playerHP = Math.max(0,playerHP-damage);
 
-  if(playerHP<=0){
-    updateBattle();
-    finishBattle(false);
-    return;
-  }
+ updateBattle();
 
-  updateBattle();
+ if(playerHP<=0){
+  finishBattle(false);
+  return;
+ }
+
+ document.getElementById("battle-message").textContent =
+  "👹 Ворог атакував! -" + damage + " HP";
 }
 
 function playerAttack(){
-  if(gameOver) return;
+ if(gameOver) return;
 
-  enemyHP = Math.max(0,enemyHP-fighters[selectedFighter].attack);
-  updateBattle();
+ const damage = fighters[selectedFighter].attack;
+ enemyHP = Math.max(0,enemyHP-damage);
 
-  if(enemyHP<=0){
-    finishBattle(true);
-    return;
-  }
+ updateBattle();
 
-  enemyTurn();
+ if(enemyHP<=0){
+  finishBattle(true);
+  return;
+ }
+
+ enemyTurn();
 }
 
 function playerSpecial(){
-  if(gameOver || specialUsed) return;
+ if(gameOver || specialUsed) return;
 
-  specialUsed = true;
-  const damage = Math.round(fighters[selectedFighter].attack*2);
+ specialUsed = true;
 
-  enemyHP = Math.max(0,enemyHP-damage);
-  updateBattle();
+ let damage = fighters[selectedFighter].attack*2;
 
-  if(enemyHP<=0){
-    finishBattle(true);
-    return;
-  }
+ // Суператака Chat GPT має фіксовану силу 200.
+ if(fighters[selectedFighter].name==="Chat GPT"){
+  damage = 200;
+ }
 
-  enemyTurn();
+ enemyHP = Math.max(0,enemyHP-damage);
+
+ updateBattle();
+
+ if(enemyHP<=0){
+  finishBattle(true);
+  return;
+ }
+
+ document.getElementById("battle-message").textContent =
+  "💥 СУПЕРАТАКА! -" + damage + " HP";
+
+ enemyTurn();
 }
 
 function playerDefend(){
-  if(gameOver) return;
+ if(gameOver) return;
 
-  defending = true;
-  document.getElementById("battle-message").textContent =
-    "🛡️ Ти захищаєшся!";
+ defending = true;
 
-  enemyTurn();
+ document.getElementById("battle-message").textContent =
+  "🛡️ Ти захищаєшся!";
+
+ enemyTurn();
 }
 
+updateCoins();
 renderFighters();
 renderShop();
-navigator.serviceWorker.register("./sw.js")
-  });
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("./sw.js")
+   .catch(error=>console.log("SW:",error));
+ });
 }
 </script>
 
 </body>
-</html>
-
+  </html>
+  
