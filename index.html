@@ -6,187 +6,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#21143b">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>BATTLE BRAWL 2.2.5</title>
+<title>BATTLE BRAWL 2.2.7</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
- margin:0;
- min-height:100vh;
- font-family:Arial,sans-serif;
- color:white;
- background:
- radial-gradient(ellipse at top,#593080 0%,transparent 55%),
+ margin:0;min-height:100vh;font-family:Arial,sans-serif;color:white;
+ background:radial-gradient(ellipse at top,#593080 0%,transparent 55%),
  linear-gradient(135deg,#100b20,#28164b,#111a30);
 }
-
 header{
- text-align:center;
- padding:22px 10px;
+ text-align:center;padding:22px 10px;
  background:linear-gradient(135deg,#241344,#3b205c);
- border-bottom:3px solid #bd75ff;
- box-shadow:0 5px 22px #0006;
+ border-bottom:3px solid #bd75ff;box-shadow:0 5px 22px #0006;
 }
-
-header h1{
- margin:0;
- font-size:32px;
- color:#e4c0ff;
- text-shadow:0 0 16px #a34cff;
-}
-
+header h1{margin:0;font-size:32px;color:#e4c0ff;text-shadow:0 0 16px #a34cff}
 header p{color:#d6c2eb;margin:9px 0 0}
-
 .version{
- display:inline-block;
- margin-top:10px;
- padding:6px 14px;
- border-radius:20px;
- background:#713caf;
- border:1px solid #d7a6ff;
- font-weight:bold;
- font-size:13px;
+ display:inline-block;margin-top:10px;padding:6px 14px;border-radius:20px;
+ background:#713caf;border:1px solid #d7a6ff;font-weight:bold;font-size:13px;
 }
-
 #currency{
- text-align:center;
- margin:14px auto;
- padding:13px;
- width:min(94%,700px);
+ text-align:center;margin:14px auto;padding:13px;width:min(94%,700px);
  background:linear-gradient(135deg,#432768,#2d1c48);
- border:1px solid #bd75ff;
- border-radius:15px;
- font-size:19px;
- box-shadow:0 4px 15px #0004;
+ border:1px solid #bd75ff;border-radius:15px;font-size:19px;box-shadow:0 4px 15px #0004;
 }
-
-main{
- width:min(95%,700px);
- margin:15px auto;
-}
-
+main{width:min(95%,700px);margin:15px auto}
 .screen{display:none}
 .screen.active{display:block}
-
-h2{
- text-align:center;
- color:#e0baff;
- text-shadow:0 0 10px #8c42c5;
-}
-
+h2{text-align:center;color:#e0baff;text-shadow:0 0 10px #8c42c5}
 .menu-button{
- display:block;
- width:100%;
- padding:15px;
- margin:11px 0;
- border:2px solid #a34cff;
- border-radius:14px;
+ display:block;width:100%;padding:15px;margin:11px 0;
+ border:2px solid #a34cff;border-radius:14px;
  background:linear-gradient(135deg,#61339a,#30204f);
- color:white;
- font-size:17px;
- font-weight:bold;
- cursor:pointer;
- box-shadow:0 4px 10px #0004;
- transition:transform .15s,filter .15s;
+ color:white;font-size:17px;font-weight:bold;cursor:pointer;
+ box-shadow:0 4px 10px #0004;transition:transform .15s,filter .15s;
 }
-
-.menu-button:active{
- transform:scale(.97);
- filter:brightness(1.25);
-}
-
+.menu-button:active{transform:scale(.97);filter:brightness(1.25)}
 .menu-button:disabled{opacity:.45;cursor:not-allowed}
-
-.back{
- background:linear-gradient(135deg,#40334f,#29203b);
- border-color:#75618e;
-}
-
+.back{background:linear-gradient(135deg,#40334f,#29203b);border-color:#75618e}
 .card{
  background:linear-gradient(145deg,#30204a,#21172f);
- border:1px solid #9865c2;
- border-radius:17px;
- padding:16px;
- margin:13px 0;
- text-align:center;
- box-shadow:0 5px 15px #0004;
+ border:1px solid #9865c2;border-radius:17px;padding:16px;
+ margin:13px 0;text-align:center;box-shadow:0 5px 15px #0004;
 }
-
 .card h3{color:#e0baff;margin-top:5px}
-
-.stats{
- display:flex;
- justify-content:center;
- flex-wrap:wrap;
- gap:9px;
-}
-
-.stats span{
- padding:8px 12px;
- border-radius:10px;
- background:#49305f;
-}
-
-.selected{
- border:2px solid #51df85;
- box-shadow:0 0 16px #51df8577;
-}
-
-.health{
- height:15px;
- background:#492b52;
- border-radius:20px;
- overflow:hidden;
- margin:10px 0;
-}
-
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}
+.stats span{padding:8px 12px;border-radius:10px;background:#49305f}
+.selected{border:2px solid #51df85;box-shadow:0 0 16px #51df8577}
+.health{height:15px;background:#492b52;border-radius:20px;overflow:hidden;margin:10px 0}
 .health-fill{
- height:100%;
- background:linear-gradient(90deg,#31c96c,#8bff9e);
+ height:100%;background:linear-gradient(90deg,#31c96c,#8bff9e);
  transition:width .2s;
 }
-
-.enemy-fill{
- background:linear-gradient(90deg,#e8324b,#ff8585);
-}
-
-#battle-message{
- min-height:25px;
- color:#e6caff;
- font-weight:bold;
-}
-
-.new-fighter{
- border:2px solid #ffcf57;
- box-shadow:0 0 15px #ffcf5744;
-}
-
+.enemy-fill{background:linear-gradient(90deg,#e8324b,#ff8585)}
+#battle-message{min-height:25px;color:#e6caff;font-weight:bold}
+.new-fighter{border:2px solid #ffcf57;box-shadow:0 0 15px #ffcf5744}
 .new-label{
- display:inline-block;
- padding:5px 10px;
- border-radius:20px;
- background:#a66b16;
- color:#fff3c2;
- font-size:12px;
- font-weight:bold;
+ display:inline-block;padding:5px 10px;border-radius:20px;
+ background:#a66b16;color:#fff3c2;font-size:12px;font-weight:bold;
 }
-
-footer{
- text-align:center;
- padding:22px;
- color:#b9a5cf;
-}
-
+footer{text-align:center;padding:22px;color:#b9a5cf}
 @media(orientation:landscape){
  main{max-width:950px}
- #fighters-list,#shop-list{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
- }
+ #fighters-list,#shop-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 }
-
 @media(max-width:400px){
  header h1{font-size:26px}
  .menu-button{padding:13px;font-size:15px}
@@ -195,19 +79,15 @@ footer{
 </head>
 
 <body>
-
 <header>
  <h1>⚔️ BATTLE BRAWL</h1>
  <p>🎃 HALLOWEEN UPDATE</p>
- <div class="version">VERSION 2.2.5</div>
+ <div class="version">VERSION 2.2.7</div>
 </header>
 
-<div id="currency">
- 💜 Flayyers: <span id="coins">0</span>
-</div>
+<div id="currency">💜 Flayyers: <span id="coins">0</span></div>
 
 <main>
-
 <section id="menu" class="screen active">
  <h2>🏠 ГОЛОВНЕ МЕНЮ</h2>
  <button class="menu-button" onclick="showScreen('fighters')">🥊 БІЙЦІ</button>
@@ -247,10 +127,9 @@ footer{
  <div id="battle-content"></div>
  <button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button>
 </section>
-
 </main>
 
-<footer>BATTLE BRAWL © 2026 — VERSION 2.2.5</footer>
+<footer>BATTLE BRAWL © 2026 — VERSION 2.2.7</footer>
 
 <script>
 const fighters = [
@@ -259,13 +138,12 @@ const fighters = [
  {name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},
  {name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300},
  {
-  name:"Кітість",
-  emoji:"✊",
-  rarity:"Епічний",
-  attack:77,
-  hp:200,
-  special:133,
-  isNew:true
+  name:"Кітість",emoji:"✊",rarity:"Епічний",
+  attack:77,hp:200,special:133,isNew:true,newLabel:"🆕 НОВИЙ БОЄЦЬ 2.2.5"
+ },
+ {
+  name:"WolkSpase",emoji:"⚫⚪",rarity:"Міфічний",
+  attack:70,hp:275,special:165,isNew:true,newLabel:"🆕 НОВИЙ БОЄЦЬ 2.2.7"
  }
 ];
 
@@ -286,7 +164,6 @@ const difficulties = {
 
 let selectedFighter = 0;
 let coins = Number(localStorage.getItem("bbCoins")) || 0;
-
 let playerHP = 0;
 let enemyHP = 0;
 let enemyMaxHP = 0;
@@ -305,9 +182,14 @@ function showScreen(id){
  document.querySelectorAll(".screen").forEach(screen=>{
   screen.classList.remove("active");
  });
-
  const target = document.getElementById(id);
  if(target) target.classList.add("active");
+}
+
+function getSpecialDamage(f){
+ if(f.special !== undefined) return f.special;
+ if(f.name==="Chat GPT") return 200;
+ return f.attack*2;
 }
 
 function renderFighters(){
@@ -329,7 +211,7 @@ function renderFighters(){
   if(f.isNew){
    const label = document.createElement("span");
    label.className = "new-label";
-   label.textContent = "🆕 НОВИЙ БОЄЦЬ 2.2.5";
+   label.textContent = f.newLabel || "🆕 НОВИЙ БОЄЦЬ";
    card.append(title,label,rarity);
   }else{
    card.append(title,rarity);
@@ -344,20 +226,12 @@ function renderFighters(){
 
   const button = document.createElement("button");
   button.className = "menu-button";
-  button.textContent =
-   selectedFighter===i ? "✅ ОБРАНО":"ОБРАТИ";
-
+  button.textContent = selectedFighter===i ? "✅ ОБРАНО":"ОБРАТИ";
   button.onclick = ()=>selectFighter(i);
 
   card.append(stats,button);
   list.appendChild(card);
  });
-}
-
-function getSpecialDamage(f){
- if(f.special !== undefined) return f.special;
- if(f.name==="Chat GPT") return 200;
- return f.attack*2;
 }
 
 function selectFighter(i){
@@ -395,7 +269,6 @@ function startGame(level){
  if(!enemy) return;
 
  currentLevel = enemy.name;
-
  playerHP = fighters[selectedFighter].hp;
  enemyHP = enemy.hp;
  enemyMaxHP = enemy.hp;
@@ -439,7 +312,6 @@ function renderBattle(){
    <p id="battle-message">Бій починається!</p>
   </div>
  `;
-
  updateBattle();
 }
 
@@ -455,16 +327,13 @@ function updateBattle(){
  document.getElementById("enemy-bar").style.width =
   Math.max(0,enemyHP/enemyMaxHP*100)+"%";
 
- document.getElementById("special-button").disabled =
-  specialUsed || gameOver;
-
+ document.getElementById("special-button").disabled = specialUsed || gameOver;
  document.getElementById("attack-button").disabled = gameOver;
  document.getElementById("defend-button").disabled = gameOver;
 }
 
 function finishBattle(playerWon){
  if(gameOver) return;
-
  gameOver = true;
 
  const message = document.getElementById("battle-message");
@@ -476,7 +345,6 @@ function finishBattle(playerWon){
  }else{
   message.textContent = "💀 ПОРАЗКА!";
  }
-
  updateBattle();
 }
 
@@ -491,7 +359,6 @@ function enemyTurn(){
  }
 
  playerHP = Math.max(0,playerHP-damage);
-
  updateBattle();
 
  if(playerHP<=0){
@@ -508,14 +375,12 @@ function playerAttack(){
 
  const damage = fighters[selectedFighter].attack;
  enemyHP = Math.max(0,enemyHP-damage);
-
  updateBattle();
 
  if(enemyHP<=0){
   finishBattle(true);
   return;
  }
-
  enemyTurn();
 }
 
@@ -523,11 +388,8 @@ function playerSpecial(){
  if(gameOver || specialUsed) return;
 
  specialUsed = true;
-
  const damage = getSpecialDamage(fighters[selectedFighter]);
-
  enemyHP = Math.max(0,enemyHP-damage);
-
  updateBattle();
 
  if(enemyHP<=0){
@@ -537,7 +399,6 @@ function playerSpecial(){
 
  document.getElementById("battle-message").textContent =
   "💥 СУПЕРАТАКА! -" + damage + " HP";
-
  enemyTurn();
 }
 
@@ -545,10 +406,8 @@ function playerDefend(){
  if(gameOver) return;
 
  defending = true;
-
  document.getElementById("battle-message").textContent =
   "🛡️ Ти захищаєшся!";
-
  enemyTurn();
 }
 
@@ -563,6 +422,5 @@ if("serviceWorker" in navigator){
  });
 }
 </script>
-
 </body>
 </html>
