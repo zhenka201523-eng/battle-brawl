@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#21143b">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>BATTLE BRAWL 2.2</title>
+<title>BATTLE BRAWL 2.2.5</title>
 
 <style>
 *{box-sizing:border-box}
@@ -16,34 +16,49 @@ body{
  min-height:100vh;
  font-family:Arial,sans-serif;
  color:white;
- background:linear-gradient(135deg,#100b20,#28164b,#111a30);
+ background:
+ radial-gradient(ellipse at top,#593080 0%,transparent 55%),
+ linear-gradient(135deg,#100b20,#28164b,#111a30);
 }
 
 header{
  text-align:center;
- padding:18px 10px;
- background:#1c1235;
- border-bottom:3px solid #a34cff;
+ padding:22px 10px;
+ background:linear-gradient(135deg,#241344,#3b205c);
+ border-bottom:3px solid #bd75ff;
+ box-shadow:0 5px 22px #0006;
 }
 
 header h1{
  margin:0;
  font-size:32px;
- color:#d9a5ff;
- text-shadow:0 0 15px #9b42ff;
+ color:#e4c0ff;
+ text-shadow:0 0 16px #a34cff;
 }
 
-header p{color:#c9b8df;margin:8px 0 0}
+header p{color:#d6c2eb;margin:9px 0 0}
+
+.version{
+ display:inline-block;
+ margin-top:10px;
+ padding:6px 14px;
+ border-radius:20px;
+ background:#713caf;
+ border:1px solid #d7a6ff;
+ font-weight:bold;
+ font-size:13px;
+}
 
 #currency{
  text-align:center;
- margin:12px auto;
- padding:12px;
+ margin:14px auto;
+ padding:13px;
  width:min(94%,700px);
- background:#352052;
- border:1px solid #a34cff;
- border-radius:12px;
+ background:linear-gradient(135deg,#432768,#2d1c48);
+ border:1px solid #bd75ff;
+ border-radius:15px;
  font-size:19px;
+ box-shadow:0 4px 15px #0004;
 }
 
 main{
@@ -56,52 +71,66 @@ main{
 
 h2{
  text-align:center;
- color:#d9a5ff;
+ color:#e0baff;
+ text-shadow:0 0 10px #8c42c5;
 }
 
 .menu-button{
  display:block;
  width:100%;
  padding:15px;
- margin:10px 0;
+ margin:11px 0;
  border:2px solid #a34cff;
  border-radius:14px;
- background:linear-gradient(135deg,#482477,#29204b);
+ background:linear-gradient(135deg,#61339a,#30204f);
  color:white;
  font-size:17px;
  font-weight:bold;
  cursor:pointer;
+ box-shadow:0 4px 10px #0004;
+ transition:transform .15s,filter .15s;
 }
 
-.menu-button:active{transform:scale(.97)}
+.menu-button:active{
+ transform:scale(.97);
+ filter:brightness(1.25);
+}
+
 .menu-button:disabled{opacity:.45;cursor:not-allowed}
 
 .back{
- background:#302344;
+ background:linear-gradient(135deg,#40334f,#29203b);
  border-color:#75618e;
 }
 
 .card{
- background:#241a3a;
- border:1px solid #7950a9;
- border-radius:15px;
- padding:15px;
- margin:12px 0;
+ background:linear-gradient(145deg,#30204a,#21172f);
+ border:1px solid #9865c2;
+ border-radius:17px;
+ padding:16px;
+ margin:13px 0;
  text-align:center;
+ box-shadow:0 5px 15px #0004;
 }
 
-.card h3{color:#d9a5ff;margin-top:5px}
+.card h3{color:#e0baff;margin-top:5px}
 
 .stats{
  display:flex;
- justify-content:space-around;
+ justify-content:center;
  flex-wrap:wrap;
- gap:8px;
+ gap:9px;
+}
+
+.stats span{
+ padding:8px 12px;
+ border-radius:10px;
+ background:#49305f;
 }
 
 .selected{
  border:2px solid #51df85;
- box-shadow:0 0 12px #51df8566;
+ box-shadow:0 0 16px #51df8577;
 }
 
 .health{
@@ -114,11 +143,13 @@ h2{
 
 .health-fill{
  height:100%;
- background:#51df85;
+ background:linear-gradient(90deg,#31c96c,#8bff9e);
  transition:width .2s;
 }
 
-.enemy-fill{background:#ff5353}
+.enemy-fill{
+ background:linear-gradient(90deg,#e8324b,#ff8585);
+}
 
 #battle-message{
  min-height:25px;
@@ -126,10 +157,25 @@ h2{
  font-weight:bold;
 }
 
+.new-fighter{
+ border:2px solid #ffcf57;
+ box-shadow:0 0 15px #ffcf5744;
+}
+
+.new-label{
+ display:inline-block;
+ padding:5px 10px;
+ border-radius:20px;
+ background:#a66b16;
+ color:#fff3c2;
+ font-size:12px;
+ font-weight:bold;
+}
+
 footer{
  text-align:center;
- padding:20px;
- color:#a99bbd;
+ padding:22px;
+ color:#b9a5cf;
 }
 
 @media(orientation:landscape){
@@ -152,7 +198,8 @@ footer{
 
 <header>
  <h1>⚔️ BATTLE BRAWL</h1>
- <p>🎃 HALLOWEEN UPDATE — VERSION 2.2</p>
+ <p>🎃 HALLOWEEN UPDATE</p>
+ <div class="version">VERSION 2.2.5</div>
 </header>
 
 <div id="currency">
@@ -203,14 +250,23 @@ footer{
 
 </main>
 
-<footer>BATTLE BRAWL © 2026</footer>
+<footer>BATTLE BRAWL © 2026 — VERSION 2.2.5</footer>
 
 <script>
 const fighters = [
  {name:"Меоад",emoji:"🐱",rarity:"Звичайний",attack:40,hp:100},
  {name:"Джемені",emoji:"💎",rarity:"Надрідкісний",attack:45,hp:56},
  {name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},
- {name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300}
+ {name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300},
+ {
+  name:"Кітість",
+  emoji:"✊",
+  rarity:"Епічний",
+  attack:77,
+  hp:200,
+  special:133,
+  isNew:true
+ }
 ];
 
 const boxes = [
@@ -260,7 +316,9 @@ function renderFighters(){
 
  fighters.forEach((f,i)=>{
   const card = document.createElement("div");
-  card.className = "card" + (selectedFighter===i ? " selected":"");
+  card.className = "card" +
+   (selectedFighter===i ? " selected":"") +
+   (f.isNew ? " new-fighter":"");
 
   const title = document.createElement("h3");
   title.textContent = f.emoji+" "+f.name;
@@ -268,11 +326,21 @@ function renderFighters(){
   const rarity = document.createElement("p");
   rarity.textContent = "Рідкість: "+f.rarity;
 
+  if(f.isNew){
+   const label = document.createElement("span");
+   label.className = "new-label";
+   label.textContent = "🆕 НОВИЙ БОЄЦЬ 2.2.5";
+   card.append(title,label,rarity);
+  }else{
+   card.append(title,rarity);
+  }
+
   const stats = document.createElement("div");
   stats.className = "stats";
   stats.innerHTML =
    `<span>❤️ ${f.hp} HP</span>
-    <span>⚔️ ${f.attack} атака</span>`;
+    <span>⚔️ ${f.attack} атака</span>
+    <span>💥 ${getSpecialDamage(f)} супер</span>`;
 
   const button = document.createElement("button");
   button.className = "menu-button";
@@ -281,9 +349,15 @@ function renderFighters(){
 
   button.onclick = ()=>selectFighter(i);
 
-  card.append(title,rarity,stats,button);
+  card.append(stats,button);
   list.appendChild(card);
  });
+}
+
+function getSpecialDamage(f){
+ if(f.special !== undefined) return f.special;
+ if(f.name==="Chat GPT") return 200;
+ return f.attack*2;
 }
 
 function selectFighter(i){
@@ -450,12 +524,7 @@ function playerSpecial(){
 
  specialUsed = true;
 
- let damage = fighters[selectedFighter].attack*2;
-
- // Суператака Chat GPT має фіксовану силу 200.
- if(fighters[selectedFighter].name==="Chat GPT"){
-  damage = 200;
- }
+ const damage = getSpecialDamage(fighters[selectedFighter]);
 
  enemyHP = Math.max(0,enemyHP-damage);
 
@@ -496,5 +565,4 @@ if("serviceWorker" in navigator){
 </script>
 
 </body>
-  </html>
-  
+</html>
