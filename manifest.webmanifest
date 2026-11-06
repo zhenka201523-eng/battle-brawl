@@ -9,15 +9,8 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#111a30",
-  "theme_color": "#294d7d"
-"icons": [
-  {
-    "src": "./Screenshot_2026-11-05-16-52-50-361_com.openai.chatgpt-edit.jpg",
-    "sizes": "512x512",
-    "type": "image/jpeg",
-    "purpose": "any"
-  }
-]
+  "theme_color": "#294d7d",
+  "icons": [
     {
       "src": "./icon-192.png",
       "sizes": "192x192",
