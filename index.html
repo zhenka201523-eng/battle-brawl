@@ -136,3 +136,15 @@ function sdSpecial(){if(sdOver||sdTurnLocked||sdSuperUsed)return;sdSuperUsed=tru
 function sdDefend(){if(sdOver||sdTurnLocked)return;sdDefending=true;sdTurnLocked=true;sdBotsTurn();}
 function sdBotsTurn(){for(let i=1;i<sdPlayers.length;i++){const bot=sdPlayers[i];if(!bot.alive)continue;const targets=sdPlayers.filter((p,j)=>j!==i&&p.alive);if(!targets.length)break;const target=targets[Math.floor(Math.random()*targets.length)];let damage=bot.attack;if(target.human&&sdDefending){damage=Math.ceil(damage/2);sdDefending=false;}target.hp=Math.max(0,target.hp-damage);if(target.hp<=0)target.alive=false;}sdDefending=false;checkSD();}
 function checkSD(){const alive=sdPlayers.filter(p=>p.alive);if(!sdPlayers[0].alive){sdOver=true;renderShowdown("💀 Ти вибув із ШД.");}else if(alive.length===1){sdOver=true;coins+=50;updateCoins();renderShowdown("🏆 ПЕРЕМОГА В ШД! +50 Flayyers");}else{sdTurnLocked=false;renderShowdown("Твій хід! Обери суперника для атаки.");}}
+renderFighters();
+renderShop();
+updateCoins();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
