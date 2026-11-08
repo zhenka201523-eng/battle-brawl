@@ -143,4 +143,9 @@ function setJoy(e){const r=joyBase.getBoundingClientRect(),cx=r.left+r.width/2,c
 joyBase.addEventListener("pointerdown",e=>{joyPointer=e.pointerId;joyBase.setPointerCapture(joyPointer);setJoy(e)});
 joyBase.addEventListener("pointermove",e=>{if(e.pointerId===joyPointer)setJoy(e)});
 function resetJoy(e){if(e.pointerId!==joyPointer)return;joyPointer=null;joy.x=joy.y=0;stick.style.transform="translate(0,0)"}
-joyBase.addEventListener("pointerup",re
+joyBase.addEventListener("pointerup",reupdateCoins();
+renderFighters();
+renderShop();
+</script>
+</body>
+</html>
