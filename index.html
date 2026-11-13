@@ -578,4 +578,350 @@ player.position.z+=joy.y*7*dt;
 const len=Math.hypot(player.position.x,player.position.z);
 if(len>arenaRadius-1.3){
 player.position.x*=((arenaRadius-1.3)/len);
-player.position.z*=((arenaRadi
+player.position.z*=((arenaRadius
+if(len>arenaRadius-1.3){
+player.position.x*=((arenaRadius-1.3)/len);
+player.position.z*=((arenaRadius-1.3)/len);
+}
+
+// Поворот камери за гравцем
+camera.position.x=player.position.x;
+camera.position.z=player.position.z+18;
+camera.lookAt(player.position.x,0,player.position.z);
+
+// Рух ботів
+botObjects.forEach(b=>{
+if(!b.alive)return;
+
+const dx=player.position.x-b.mesh.position.x;
+const dz=player.position.z-b.mesh.position.z;
+const dist=Math.hypot(dx,dz);
+
+if(dist>1.8){
+b.mesh.position.x+=(dx/dist)*2.1*dt;
+b.mesh.position.z+=(dz/dist)*2.1*dt;
+}
+
+// Атака бота
+b.cool-=dt;
+if(dist<2.1&&b.cool<=0){
+pHP=Math.max(0,pHP-b.attack);
+b.cool=1.2;
+vibrate(50);
+updateHUD();
+say3D("👹 Бот атакує!");
+}
+});
+
+// Збирання зірок
+starObjects.forEach((s,i)=>{
+s.rotation.y+=dt*2;
+const dx=player.position.x-s.position.x;
+const dz=player.position.z-s.position.z;
+
+if(Math.hypot(dx,dz)<1.2){
+scene.remove(s);
+starObjects.splice(i,1);
+starCount++;
+spawnStar();
+updateHUD();
+playSound(800);
+say3D("⭐ +1 зірка!");
+}
+});
+
+// Рух куль
+bulletObjects.forEach((b,i)=>{
+b.mesh.position.x+=b.vx*dt;
+b.mesh.position.z+=b.vz*dt;
+b.life-=dt;
+
+let hit=false;
+
+botObjects.forEach(bot=>{
+if(!bot.alive)return;
+
+const dx=b.mesh.position.x-bot.mesh.position.x;
+const dz=b.mesh.position.z-bot.mesh.position.z;
+
+if(Math.hypot(dx,dz)<1){
+bot.hp-=b.damage;
+hit=true;
+
+if(bot.hp<=0){
+bot.alive=false;
+scene.remove(bot.mesh);
+starCount+=2;
+spawnStar();
+updateHUD();
+say3D("💥 Бота переможено! +2 зірки");
+}
+}
+});
+
+if(hit||b.life<=0){
+scene.remove(b.mesh);
+bulletObjects.splice(i,1);
+}
+});
+
+// Перевірка перемоги та поразки
+const alive=botObjects.filter(b=>b.alive).length;
+
+if(pHP<=0){
+pHP=0;
+game3dRunning=false;
+updateHUD();
+say3D("💀 Поразка! Спробуй ще раз.");
+return;
+}
+
+if(alive===0){
+game3dRunning=false;
+coins+=20+starCount*2;
+updateCoins();
+updateHUD();
+say3D("🏆 ПЕРЕМОГА! +"+(20+starCount*2)+" Flayyers");
+return;
+}
+
+updateHUD();
+renderer.render(scene,camera);
+raf=requestAnimationFrame(loop3D);
+}
+
+// СТРІЛЬБА
+
+function shoot3D(isSuper=false){
+if(!game3dRunning)return;
+
+if(isSuper){
+if(!superReady)return;
+superReady=false;
+superCooldown=5;
+}else{
+if(fireCooldown>0)return;
+fireCooldown=.35;
+}
+
+const targets=botObjects.filter(b=>b.alive);
+if(!targets.length)return;
+
+let target=null;
+let best=Infinity;
+
+targets.forEach(b=>{
+const dx=b.mesh.position.x-player.position.x;
+const dz=b.mesh.position.z-player.position.z;
+const dist=Math.hypot(dx,dz);
+
+if(dist<best){
+best=dist;
+target=b;
+}
+});
+
+if(!target)return;
+
+const dx=target.mesh.position.x-player.position.x;
+const dz=target.mesh.position.z-player.position.z;
+const dist=Math.hypot(dx,dz)||1;
+
+const bullet=new THREE.Mesh(
+new THREE.SphereGeometry(isSuper?.32:.19,12,12),
+new THREE.MeshStandardMaterial({
+color:isSuper?0xffc52e:0x55caff,
+emissive:isSuper?0xff8800:0x2277ff
+})
+);
+
+bullet.position.set(
+player.position.x,
+1,
+player.position.z
+);
+
+scene.add(bullet);
+
+bulletObjects.push({
+mesh:bullet,
+vx:dx/dist*(isSuper?15:12),
+vz:dz/dist*(isSuper?15:12),
+damage:isSuper?pSuper:pAttack,
+life:2
+});
+
+playSound(isSuper?850:450);
+vibrate(isSuper?100:25);
+say3D(isSuper?"💥 СУПЕРАТАКА!":"🎯 АТАКА!");
+}
+
+// ДЖОЙСТИК
+
+const joystick=document.getElementById("joystick");
+const stick=document.getElementById("stick");
+
+let joyPointer=null;
+
+function moveJoystick(e){
+const rect=joystick.getBoundingClientRect();
+const cx=rect.left+rect.width/2;
+const cy=rect.top+rect.height/2;
+
+let dx=e.clientX-cx;
+let dy=e.clientY-cy;
+
+const max=rect.width*.34;
+const dist=Math.hypot(dx,dy);
+
+if(dist>max){
+dx=dx/dist*max;
+dy=dy/dist*max;
+}
+
+joy.x=dx/max;
+joy.y=dy/max;
+
+stick.style.left=(rect.width/2-26+dx)+"px";
+stick.style.top=(rect.height/2-26+dy)+"px";
+}
+
+function resetJoystick(){
+joy.x=0;
+joy.y=0;
+stick.style.left=(joystick.clientWidth-52)/2+"px";
+stick.style.top=(joystick.clientHeight-52)/2+"px";
+joyPointer=null;
+}
+
+joystick.addEventListener("pointerdown",e=>{
+if(joyPointer!==null)return;
+joyPointer=e.pointerId;
+joystick.setPointerCapture(e.pointerId);
+moveJoystick(e);
+});
+
+joystick.addEventListener("pointermove",e=>{
+if(e.pointerId===joyPointer)moveJoystick(e);
+});
+
+joystick.addEventListener("pointerup",e=>{
+if(e.pointerId===joyPointer)resetJoystick();
+});
+
+joystick.addEventListener("pointercancel",resetJoystick);
+
+// КНОПКИ АТАКИ
+
+document.getElementById("fireBtn").addEventListener("pointerdown",e=>{
+e.preventDefault();
+shoot3D(false);
+});
+
+document.getElementById("superBtn").addEventListener("pointerdown",e=>{
+e.preventDefault();
+shoot3D(true);
+});
+
+// ВИХІД ІЗ 3D
+
+function exit3D(){
+game3dRunning=false;
+cancelAnimationFrame(raf);
+resetJoystick();
+showScreen("menu");
+}
+
+// КЛАСИЧНЕ ШД
+
+let oldGame={
+hp:100,
+enemy:100,
+stars:0,
+over:false
+};
+
+function startOldShowdown(){
+oldGame={
+hp:fighters[selected].hp,
+enemy:100,
+stars:0,
+over:false
+};
+
+showScreen("oldShowdown");
+renderOldShowdown();
+}
+
+function renderOldShowdown(){
+const f=fighters[selected];
+const root=document.getElementById("oldSD");
+
+root.innerHTML=`
+<div class="card">
+<h3>${f.emoji} ${f.name}</h3>
+<p>❤️ Твоє HP: <span id="oldHP">${oldGame.hp}</span></p>
+<p>👹 HP ворога: <span id="oldEnemy">${oldGame.enemy}</span></p>
+<p>⭐ Зірки: <span id="oldStars">${oldGame.stars}</span></p>
+</div>
+
+<div class="card">
+<button class="menu-button" id="oldAttack">🎯 АТАКА</button>
+<button class="menu-button" id="oldSuper">💥 СУПЕРАТАКА</button>
+<p id="oldMessage">Збери зірки та переможи!</p>
+</div>
+`;
+
+function oldTurn(damage){
+if(oldGame.over)return;
+
+oldGame.enemy=Math.max(0,oldGame.enemy-damage);
+
+if(oldGame.enemy===0){
+oldGame.over=true;
+oldGame.stars+=5;
+coins+=20;
+updateCoins();
+document.getElementById("oldMessage").textContent=
+"🏆 ПЕРЕМОГА! +20 Flayyers";
+}else{
+oldGame.hp=Math.max(0,oldGame.hp-12);
+
+if(oldGame.hp===0){
+oldGame.over=true;
+document.getElementById("oldMessage").textContent="💀 ПОРАЗКА!";
+}
+}
+
+document.getElementById("oldHP").textContent=oldGame.hp;
+document.getElementById("oldEnemy").textContent=oldGame.enemy;
+document.getElementById("oldStars").textContent=oldGame.stars;
+playSound(400);
+}
+
+document.getElementById("oldAttack").onclick=()=>{
+oldTurn(f.attack);
+};
+
+document.getElementById("oldSuper").onclick=()=>{
+if(oldGame.over)return;
+if(oldGame.used)return;
+
+oldGame.used=true;
+oldTurn(specialOf(f));
+};
+}
+
+// ЗАПУСК ГРИ
+
+loadSettings();
+updateCoins();
+renderFighters();
+renderShop();
+
+// Початковий екран
+showScreen("menu");
+
+</script>
+</body>
+</html>
