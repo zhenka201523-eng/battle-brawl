@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -6,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#21143b">
 <link rel="manifest" href="./manifest.webmanifest">
-<title>BATTLE BRAWL 2.45</title>
+<title>BATTLE BRAWL 2.45 FIX</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#100b20;color:white;font-family:Arial,sans-serif}
@@ -19,14 +18,13 @@ header p{margin:7px;color:#d6c2eb}
 main{width:min(96%,850px);margin:12px auto}
 .screen{display:none}.screen.active{display:block}
 h2{text-align:center;color:#e0baff}
-.menu-button{display:block;width:100%;padding:14px;margin:10px 0;border:2px solid #a34cff;border-radius:13px;background:linear-gradient(135deg,#61339a,#30204f);color:white;font-size:16px;font-weight:bold}
+.menu-button{display:block;width:100%;padding:14px;margin:10px 0;border:2px solid #a34cff;border-radius:13px;background:linear-gradient(135deg,#61339a,#30204f);color:white;font-size:16px;font-weight:bold;cursor:pointer}
 .menu-button:active{filter:brightness(1.3);transform:scale(.99)}
 .back{background:#40334f;border-color:#75618e}
 .card{background:linear-gradient(145deg,#30204a,#21172f);border:1px solid #9865c2;border-radius:16px;padding:14px;margin:12px 0;text-align:center}
 .stats{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
 .stats span{padding:7px 10px;border-radius:9px;background:#49305f}
-.selected{border:2px solid #51df85}
-.new{border:2px solid #ffcf57}
+.selected{border:2px solid #51df85}.new{border:2px solid #ffcf57}
 .small{font-size:12px;color:#d9c6eb}
 .setting{padding:14px;margin:12px 0;background:#302044;border:1px solid #9865c2;border-radius:13px}
 .setting label{display:block;margin-bottom:9px;font-weight:bold}
@@ -34,15 +32,15 @@ h2{text-align:center;color:#e0baff}
 .toggle{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .toggle input{width:24px;height:24px;accent-color:#a34cff}
 #arenaWrap{position:relative;width:100%;height:min(66vh,590px);min-height:330px;background:#090714;border:2px solid #bd75ff;border-radius:15px;overflow:hidden;touch-action:none}
-#game3d{width:100%;height:100%;display:block}
+#game3d{width:100%;height:100%;display:block;touch-action:none}
 #hud{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
 .hudbox{background:#140c24e8;border:1px solid #bd75ff;border-radius:10px;padding:7px 10px;font-weight:bold;font-size:13px}
 #message3d{position:absolute;top:48px;left:50%;transform:translateX(-50%);background:#160b2ddd;border:1px solid #bd75ff;border-radius:12px;padding:7px 12px;text-align:center;font-weight:bold;max-width:90%;pointer-events:none;font-size:13px}
-#controls{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:10px;touch-action:none}
-#joystick{width:130px;height:130px;border-radius:50%;background:#ffffff22;border:3px solid #d9b5ff88;position:relative;touch-action:none;flex:none}
-#stick{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#d9a5ff,#713caf);border:2px solid white;position:absolute;left:36px;top:36px;box-shadow:0 3px 12px #0008}
-.actionButtons{display:flex;gap:10px;align-items:end}
-.action{width:76px;height:76px;border-radius:50%;border:3px solid white;background:linear-gradient(135deg,#9a42db,#4b1c7c);color:white;font-weight:bold;font-size:12px;box-shadow:0 4px 12px #0008;touch-action:none}
+#controls{position:relative;z-index:30;display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:10px;touch-action:none;user-select:none;-webkit-user-select:none}
+#joystick{width:130px;height:130px;border-radius:50%;background:#ffffff22;border:3px solid #d9b5ff88;position:relative;touch-action:none;flex:none;pointer-events:auto;z-index:31}
+#stick{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#d9a5ff,#713caf);border:2px solid white;position:absolute;left:36px;top:36px;box-shadow:0 3px 12px #0008;pointer-events:none}
+.actionButtons{display:flex;gap:10px;align-items:end;position:relative;z-index:32}
+.action{width:76px;height:76px;border-radius:50%;border:3px solid white;background:linear-gradient(135deg,#9a42db,#4b1c7c);color:white;font-weight:bold;font-size:12px;box-shadow:0 4px 12px #0008;touch-action:none;pointer-events:auto;position:relative;z-index:33;cursor:pointer}
 .action.super{width:88px;height:88px;background:linear-gradient(135deg,#ffbf37,#a34a00);color:#241000}
 footer{text-align:center;padding:18px;color:#b9a5cf}
 #intro{position:fixed;inset:0;z-index:1000;background:radial-gradient(ellipse,#593080,#130821 75%);display:flex;align-items:center;justify-content:center;flex-direction:column;animation:fade 2.5s forwards;pointer-events:none}
@@ -54,19 +52,10 @@ footer{text-align:center;padding:18px;color:#b9a5cf}
 </style>
 </head>
 <body>
-
 <div id="intro"><span>PRESENT BY</span><b>ZHENKA</b></div>
-
-<header>
-<h1>⚔️ BATTLE BRAWL</h1>
-<p>💜 UPDATE 2.45</p>
-<div class="version">VERSION 2.45</div>
-</header>
-
+<header><h1>⚔️ BATTLE BRAWL</h1><p>💜 UPDATE 2.45 FIX</p><div class="version">VERSION 2.45 FIX</div></header>
 <div id="currency">💜 Flayyers: <span id="coins">0</span></div>
-
 <main>
-
 <section id="menu" class="screen active">
 <h2>🏠 ГОЛОВНЕ МЕНЮ</h2>
 <button class="menu-button" onclick="showScreen('fighters')">🥊 БІЙЦІ</button>
@@ -74,854 +63,84 @@ footer{text-align:center;padding:18px;color:#b9a5cf}
 <button class="menu-button" onclick="showScreen('shop')">🛒 МАГАЗИН</button>
 <button class="menu-button" onclick="showScreen('settings')">⚙️ НАЛАШТУВАННЯ</button>
 </section>
-
-<section id="fighters" class="screen">
-<h2>🥊 ВИБІР БІЙЦЯ</h2>
-<div id="fightersList"></div>
-<button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
-</section>
-
-<section id="modes" class="screen">
-<h2>⚔️ РЕЖИМИ ГРИ</h2>
+<section id="fighters" class="screen"><h2>🥊 ВИБІР БІЙЦЯ</h2><div id="fightersList"></div><button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button></section>
+<section id="modes" class="screen"><h2>⚔️ РЕЖИМИ ГРИ</h2>
 <button class="menu-button" onclick="showScreen('difficulty')">1️⃣ 1 НА 1</button>
 <button class="menu-button" onclick="start3D()">☠️ ШД 3D</button>
 <button class="menu-button" onclick="startOldShowdown()">☠️ ШД — КЛАСИЧНИЙ</button>
-<button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
-</section>
-
-<section id="difficulty" class="screen">
-<h2>🎚️ СКЛАДНІСТЬ</h2>
-<button class="menu-button" onclick="startDuel('easy')">🟢 ЛЕГКО</button>
-<button class="menu-button" onclick="startDuel('normal')">🔵 НОРМАЛЬНО</button>
-<button class="menu-button" onclick="startDuel('hard')">🟠 ХАРДОВО</button>
-<button class="menu-button" onclick="startDuel('extreme')">🔴 ЕКСТРЕМАЛЬНО</button>
-<button class="menu-button" onclick="startDuel('impossible')">💀 IMPOSSIBLE DEMON</button>
-<button class="menu-button back" onclick="showScreen('modes')">⬅ НАЗАД</button>
-</section>
-
-<section id="duel" class="screen">
-<h2>⚔️ БІЙ 1 НА 1</h2>
-<div id="duelContent"></div>
-<button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button>
-</section>
-
-<section id="shop" class="screen">
-<h2>🛒 МАГАЗИН</h2>
-<div id="shopList"></div>
-<button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
-</section>
-
-<section id="settings" class="screen">
-<h2>⚙️ НАЛАШТУВАННЯ</h2>
-<div class="card">
-<h3>🎮 ІГРОВІ НАЛАШТУВАННЯ</h3>
-<div class="setting toggle">
-<label for="soundToggle">🔊 Звук</label>
-<input id="soundToggle" type="checkbox">
-</div>
-<div class="setting toggle">
-<label for="vibrationToggle">📳 Вібрація</label>
-<input id="vibrationToggle" type="checkbox">
-</div>
-<div class="setting">
-<label for="qualitySelect">🎨 Якість графіки</label>
-<select id="qualitySelect">
-<option value="low">Низька</option>
-<option value="medium">Середня</option>
-<option value="high">Висока</option>
-</select>
-</div>
-<p class="small" id="settingsStatus">Налаштування зберігаються автоматично.</p>
-<button class="menu-button" onclick="saveSettings()">💾 ЗБЕРЕГТИ</button>
-<button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button>
-</div>
-</section>
-
-<section id="showdown3d" class="screen">
-<h2>☠️ ШД 3D</h2>
-<div id="arenaWrap">
-<canvas id="game3d"></canvas>
-<div id="hud">
-<div class="hudbox">❤️ <span id="hpHud">100</span></div>
-<div class="hudbox">⭐ <span id="starsHud">0</span></div>
-<div class="hudbox">👹 <span id="botsHud">6</span></div>
-</div>
-<div id="message3d">Збирай зірки та перемагай ботів!</div>
-</div>
-<div id="controls">
-<div id="joystick"><div id="stick"></div></div>
-<div class="actionButtons">
-<button class="action" id="fireBtn">🎯<br>АТАКА</button>
-<button class="action super" id="superBtn">💥<br>СУПЕР</button>
-</div>
-</div>
-<p class="small">🕹️ Джойстик — рух • 🎯 Атака — стрільба • 💥 Супер — потужний постріл</p>
-<button class="menu-button" onclick="exit3D()">🏠 ВИЙТИ З РЕЖИМУ</button>
-</section>
-
-<section id="oldShowdown" class="screen">
-<h2>☠️ ШД — КЛАСИЧНИЙ</h2>
-<div id="oldSD"></div>
-<button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button>
-</section>
-
-</main>
-
-<footer>BATTLE BRAWL © 2026 — VERSION 2.45</footer>
-
+<button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button></section>
+<section id="difficulty" class="screen"><h2>🎚️ СКЛАДНІСТЬ</h2>
+<button class="menu-button" onclick="startDuel('easy')">🟢 ЛЕГКО</button><button class="menu-button" onclick="startDuel('normal')">🔵 НОРМАЛЬНО</button><button class="menu-button" onclick="startDuel('hard')">🟠 ХАРДОВО</button><button class="menu-button" onclick="startDuel('extreme')">🔴 ЕКСТРЕМАЛЬНО</button><button class="menu-button" onclick="startDuel('impossible')">💀 IMPOSSIBLE DEMON</button><button class="menu-button back" onclick="showScreen('modes')">⬅ НАЗАД</button></section>
+<section id="duel" class="screen"><h2>⚔️ БІЙ 1 НА 1</h2><div id="duelContent"></div><button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button></section>
+<section id="shop" class="screen"><h2>🛒 МАГАЗИН</h2><div id="shopList"></div><button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button></section>
+<section id="settings" class="screen"><h2>⚙️ НАЛАШТУВАННЯ</h2><div class="card"><h3>🎮 ІГРОВІ НАЛАШТУВАННЯ</h3>
+<div class="setting toggle"><label for="soundToggle">🔊 Звук</label><input id="soundToggle" type="checkbox"></div>
+<div class="setting toggle"><label for="vibrationToggle">📳 Вібрація</label><input id="vibrationToggle" type="checkbox"></div>
+<div class="setting"><label for="qualitySelect">🎨 Якість графіки</label><select id="qualitySelect"><option value="low">Низька</option><option value="medium">Середня</option><option value="high">Висока</option></select></div>
+<p class="small" id="settingsStatus">Налаштування зберігаються автоматично.</p><button class="menu-button" onclick="saveSettings()">💾 ЗБЕРЕГТИ</button><button class="menu-button back" onclick="showScreen('menu')">⬅ НАЗАД</button></div></section>
+<section id="showdown3d" class="screen"><h2>☠️ ШД 3D</h2><div id="arenaWrap"><canvas id="game3d"></canvas><div id="hud"><div class="hudbox">❤️ <span id="hpHud">100</span></div><div class="hudbox">⭐ <span id="starsHud">0</span></div><div class="hudbox">👹 <span id="botsHud">6</span></div></div><div id="message3d">Збирай зірки та перемагай ботів!</div></div>
+<div id="controls"><div id="joystick"><div id="stick"></div></div><div class="actionButtons"><button type="button" class="action" id="fireBtn">🎯<br>АТАКА</button><button type="button" class="action super" id="superBtn">💥<br>СУПЕР</button></div></div>
+<p class="small">🕹️ Джойстик — рух • 🎯 Атака — стрільба • 💥 Супер — потужний постріл</p><button class="menu-button" onclick="exit3D()">🏠 ВИЙТИ З РЕЖИМУ</button></section>
+<section id="oldShowdown" class="screen"><h2>☠️ ШД — КЛАСИЧНИЙ</h2><div id="oldSD"></div><button class="menu-button back" onclick="showScreen('menu')">🏠 МЕНЮ</button></section>
+</main><footer>BATTLE BRAWL © 2026 — VERSION 2.45 FIX</footer>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
+"use strict";
 const fighters=[
-{name:"Меоад",emoji:"🐱",rarity:"Звичайний",attack:40,hp:100},
-{name:"Джемені",emoji:"💎",rarity:"Надрідкісний",attack:45,hp:56},
-{name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},
-{name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300,special:200},
-{name:"Кітість",emoji:"✊",rarity:"Епічний",attack:77,hp:200,special:133},
-{name:"WolkSpase",emoji:"⚫",rarity:"Міфічний",attack:70,hp:275,special:165},
-{name:"KANARLT",emoji:"🐗",rarity:"Рідкісний",attack:66,hp:80,special:100},
-{name:"BLUERS",emoji:"🖤",rarity:"Міфічний",attack:80,hp:200,special:100,poisonDamage:15},
-{name:"ROCHER",emoji:"👑",rarity:"Легендарний",attack:150,hp:400,special:250},
-{name:"Харіско Чан",emoji:"🥷",rarity:"Епічний",attack:50,hp:100,special:130},
-{name:"Яруд",emoji:"🛡️",rarity:"Звичайний",attack:23,hp:70,special:100}
-];
-
-const boxes=[
-{name:"Common Box",cost:50,min:20,max:65},
-{name:"Rare Box",cost:100,min:50,max:130},
-{name:"Epic Box",cost:200,min:100,max:260},
-{name:"Mythic Box",cost:350,min:180,max:450},
-{name:"Legendary Box",cost:500,min:300,max:700}
-];
-
+{name:"Меоад",emoji:"🐱",rarity:"Звичайний",attack:40,hp:100},{name:"Джемені",emoji:"💎",rarity:"Надрідкісний",attack:45,hp:56},{name:"Жед",emoji:"🐉",rarity:"Міфічний",attack:68,hp:100},{name:"Chat GPT",emoji:"🤖",rarity:"Легендарний",attack:95,hp:300,special:200},{name:"Кітість",emoji:"✊",rarity:"Епічний",attack:77,hp:200,special:133},{name:"WolkSpase",emoji:"⚫",rarity:"Міфічний",attack:70,hp:275,special:165},{name:"KANARLT",emoji:"🐗",rarity:"Рідкісний",attack:66,hp:80,special:100},{name:"BLUERS",emoji:"🖤",rarity:"Міфічний",attack:80,hp:200,special:100,poisonDamage:15},{name:"ROCHER",emoji:"👑",rarity:"Легендарний",attack:150,hp:400,special:250},{name:"Харіско Чан",emoji:"🥷",rarity:"Епічний",attack:50,hp:100,special:130},{name:"Яруд",emoji:"🛡️",rarity:"Звичайний",attack:23,hp:70,special:100}];
+const boxes=[{name:"Common Box",cost:50,min:20,max:65},{name:"Rare Box",cost:100,min:50,max:130},{name:"Epic Box",cost:200,min:100,max:260},{name:"Mythic Box",cost:350,min:180,max:450},{name:"Legendary Box",cost:500,min:300,max:700}];
 let selected=Number(localStorage.getItem("bbSelected"))||0;
 let coins=Math.max(0,Number(localStorage.getItem("bbCoins"))||0);
-
-function updateCoins(){
-document.getElementById("coins").textContent=coins;
-localStorage.setItem("bbCoins",coins);
-}
-
+function updateCoins(){document.getElementById("coins").textContent=coins;localStorage.setItem("bbCoins",coins)}
 function specialOf(f){return f.special??f.attack*2}
-
-function showScreen(id){
-if(id!=="showdown3d"&&game3dRunning){
-game3dRunning=false;
-cancelAnimationFrame(raf);
-}
-document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-if(id==="showdown3d"&&renderer)resize3D();
-}
-
-function renderFighters(){
-const root=document.getElementById("fightersList");
-root.innerHTML="";
-fighters.forEach((f,i)=>{
-const d=document.createElement("div");
-d.className="card"+(i===selected?" selected":"")+(i>=9?" new":"");
-d.innerHTML=`
-<h3>${f.emoji} ${f.name}</h3>
-<p>${f.rarity}</p>
-<div class="stats">
-<span>❤️ ${f.hp} HP</span>
-<span>⚔️ ${f.attack}</span>
-<span>💥 ${specialOf(f)}</span>
-</div>
-<button class="menu-button">${i===selected?"✅ ОБРАНО":"ОБРАТИ"}</button>`;
-d.querySelector("button").onclick=()=>{
-selected=i;
-localStorage.setItem("bbSelected",selected);
-renderFighters();
-playSound(500);
-};
-root.append(d);
-});
-}
-
-function renderShop(){
-const root=document.getElementById("shopList");
-root.innerHTML="";
-boxes.forEach(b=>{
-const d=document.createElement("div");
-d.className="card";
-d.innerHTML=`
-<h3>🎁 ${b.name}</h3>
-<p>Ціна: 💜 ${b.cost} Flayyers</p>
-<button class="menu-button">ВІДКРИТИ КЕЙС</button>`;
-d.querySelector("button").onclick=()=>{
-if(coins<b.cost){
-alert("Недостатньо Flayyers!");
-return;
-}
-coins-=b.cost;
-const reward=Math.floor(Math.random()*(b.max-b.min+1))+b.min;
-coins+=reward;
-updateCoins();
-playSound(700);
-alert("Отримано "+reward+" Flayyers!");
-};
-root.append(d);
-});
-}
-
-const levels={
-easy:{hp:50,attack:5},
-normal:{hp:100,attack:15},
-hard:{hp:150,attack:25},
-extreme:{hp:250,attack:40},
-impossible:{hp:500,attack:65}
-};
-
+function showScreen(id){if(id!=="showdown3d"&&game3dRunning){game3dRunning=false;cancelAnimationFrame(raf)}document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");if(id==="showdown3d"&&renderer)resize3D()}
+function renderFighters(){const root=document.getElementById("fightersList");root.innerHTML="";fighters.forEach((f,i)=>{const d=document.createElement("div");d.className="card"+(i===selected?" selected":"")+(i>=9?" new":"");d.innerHTML=`<h3>${f.emoji} ${f.name}</h3><p>${f.rarity}</p><div class="stats"><span>❤️ ${f.hp} HP</span><span>⚔️ ${f.attack}</span><span>💥 ${specialOf(f)}</span></div><button class="menu-button">${i===selected?"✅ ОБРАНО":"ОБРАТИ"}</button>`;d.querySelector("button").onclick=()=>{selected=i;localStorage.setItem("bbSelected",selected);renderFighters();playSound(500)};root.append(d)})}
+function renderShop(){const root=document.getElementById("shopList");root.innerHTML="";boxes.forEach(b=>{const d=document.createElement("div");d.className="card";d.innerHTML=`<h3>🎁 ${b.name}</h3><p>Ціна: 💜 ${b.cost} Flayyers</p><button class="menu-button">ВІДКРИТИ КЕЙС</button>`;d.querySelector("button").onclick=()=>{if(coins<b.cost){alert("Недостатньо Flayyers!");return}coins-=b.cost;const reward=Math.floor(Math.random()*(b.max-b.min+1))+b.min;coins+=reward;updateCoins();playSound(700);alert("Отримано "+reward+" Flayyers!")};root.append(d)})}
+const levels={easy:{hp:50,attack:5},normal:{hp:100,attack:15},hard:{hp:150,attack:25},extreme:{hp:250,attack:40},impossible:{hp:500,attack:65}};
 let duel={};
-
-function startDuel(level){
-const f=fighters[selected];
-duel={hp:f.hp,enemy:levels[level].hp,max:levels[level].hp,attack:levels[level].attack,used:false,over:false};
-showScreen("duel");
-renderDuel();
-}
-
-function renderDuel(){
-const f=fighters[selected];
-const d=document.getElementById("duelContent");
-d.innerHTML=`
-<div class="card" id="playerCard">
-<h3>${f.emoji} ${f.name}</h3>❤️ ${duel.hp}/${f.hp}
-</div>
-<div class="card" id="enemyCard">
-<h3>👹 Ворог</h3>❤️ ${duel.enemy}/${duel.max}
-</div>
-<div class="card">
-<button class="menu-button" id="da">⚔️ АТАКА</button>
-<button class="menu-button" id="ds">💥 СУПЕРАТАКА</button>
-<p id="dm">Бій починається!</p>
-</div>`;
-
-function update(){
-document.getElementById("playerCard").innerHTML=`<h3>${f.emoji} ${f.name}</h3>❤️ ${duel.hp}/${f.hp}`;
-document.getElementById("enemyCard").innerHTML=`<h3>👹 Ворог</h3>❤️ ${duel.enemy}/${duel.max}`;
-}
-
-function turn(dmg){
-if(duel.over)return;
-duel.enemy=Math.max(0,duel.enemy-dmg);
-playSound(350);
-if(duel.enemy===0){
-duel.over=true;
-coins+=10;
-updateCoins();
-document.getElementById("dm").textContent="🏆 Перемога! +10 Flayyers";
-update();
-return;
-}
-duel.hp=Math.max(0,duel.hp-duel.attack);
-if(duel.hp===0){
-duel.over=true;
-document.getElementById("dm").textContent="💀 Поразка!";
-}
-update();
-}
-
-document.getElementById("da").onclick=()=>turn(f.attack);
-document.getElementById("ds").onclick=()=>{
-if(!duel.used){
-duel.used=true;
-turn(specialOf(f));
-}
-};
-}
-
-// НАЛАШТУВАННЯ
-
-let settings={
-sound:true,
-vibration:true,
-quality:"high"
-};
-
-function loadSettings(){
-try{
-const saved=JSON.parse(localStorage.getItem("bbSettings"));
-if(saved)settings={...settings,...saved};
-}catch(e){}
-document.getElementById("soundToggle").checked=settings.sound;
-document.getElementById("vibrationToggle").checked=settings.vibration;
-document.getElementById("qualitySelect").value=settings.quality;
-}
-
-function saveSettings(){
-settings.sound=document.getElementById("soundToggle").checked;
-settings.vibration=document.getElementById("vibrationToggle").checked;
-settings.quality=document.getElementById("qualitySelect").value;
-localStorage.setItem("bbSettings",JSON.stringify(settings));
-document.getElementById("settingsStatus").textContent="✅ Налаштування збережено!";
-if(settings.vibration&&navigator.vibrate)navigator.vibrate(80);
-}
-
-document.getElementById("soundToggle").onchange=saveSettings;
-document.getElementById("vibrationToggle").onchange=saveSettings;
-document.getElementById("qualitySelect").onchange=()=>{
-saveSettings();
-if(renderer)applyQuality();
-};
-
-// ЗВУК
-
+function startDuel(level){const f=fighters[selected];duel={hp:f.hp,enemy:levels[level].hp,max:levels[level].hp,attack:levels[level].attack,used:false,over:false};showScreen("duel");renderDuel()}
+function renderDuel(){const f=fighters[selected],d=document.getElementById("duelContent");d.innerHTML=`<div class="card" id="playerCard"></div><div class="card" id="enemyCard"></div><div class="card"><button class="menu-button" id="da">⚔️ АТАКА</button><button class="menu-button" id="ds">💥 СУПЕРАТАКА</button><p id="dm">Бій починається!</p></div>`;function update(){document.getElementById("playerCard").innerHTML=`<h3>${f.emoji} ${f.name}</h3>❤️ ${duel.hp}/${f.hp}`;document.getElementById("enemyCard").innerHTML=`<h3>👹 Ворог</h3>❤️ ${duel.enemy}/${duel.max}`}function turn(dmg){if(duel.over)return;duel.enemy=Math.max(0,duel.enemy-dmg);playSound(350);if(duel.enemy===0){duel.over=true;coins+=10;updateCoins();document.getElementById("dm").textContent="🏆 Перемога! +10 Flayyers";update();return}duel.hp=Math.max(0,duel.hp-duel.attack);if(duel.hp===0){duel.over=true;document.getElementById("dm").textContent="💀 Поразка!"}update()}document.getElementById("da").onclick=()=>turn(f.attack);document.getElementById("ds").onclick=()=>{if(!duel.used&&!duel.over){duel.used=true;turn(specialOf(f))}};update()}
+let settings={sound:true,vibration:true,quality:"high"};
+function loadSettings(){try{const saved=JSON.parse(localStorage.getItem("bbSettings"));if(saved)settings={...settings,...saved}}catch(e){}document.getElementById("soundToggle").checked=settings.sound;document.getElementById("vibrationToggle").checked=settings.vibration;document.getElementById("qualitySelect").value=settings.quality}
+function saveSettings(){settings.sound=document.getElementById("soundToggle").checked;settings.vibration=document.getElementById("vibrationToggle").checked;settings.quality=document.getElementById("qualitySelect").value;localStorage.setItem("bbSettings",JSON.stringify(settings));document.getElementById("settingsStatus").textContent="✅ Налаштування збережено!";if(settings.vibration&&navigator.vibrate)navigator.vibrate(60)}
+document.getElementById("soundToggle").onchange=saveSettings;document.getElementById("vibrationToggle").onchange=saveSettings;document.getElementById("qualitySelect").onchange=()=>{saveSettings();if(renderer)applyQuality()};
 let audioContext=null;
-
-function playSound(freq=440){
-if(!settings.sound)return;
-try{
-audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
-if(audioContext.state==="suspended")audioContext.resume();
-const osc=audioContext.createOscillator();
-const gain=audioContext.createGain();
-osc.frequency.value=freq;
-gain.gain.setValueAtTime(.08,audioContext.currentTime);
-gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.12);
-osc.connect(gain);
-gain.connect(audioContext.destination);
-osc.start();
-osc.stop(audioContext.currentTime+.12);
-}catch(e){}
-}
-
-function vibrate(ms=30){
-if(settings.vibration&&navigator.vibrate)navigator.vibrate(ms);
-}
-
-// 3D ШД
-
-let renderer,scene,camera,player;
+function playSound(freq=440){if(!settings.sound)return;try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==="suspended")audioContext.resume();const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.frequency.value=freq;gain.gain.setValueAtTime(.08,audioContext.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.12);osc.connect(gain);gain.connect(audioContext.destination);osc.start();osc.stop(audioContext.currentTime+.12)}catch(e){}}
+function vibrate(ms=30){if(settings.vibration&&navigator.vibrate)navigator.vibrate(ms)}
+let renderer,scene,camera,player,raf=0,game3dRunning=false;
 let botObjects=[],starObjects=[],bulletObjects=[];
-let game3dRunning=false,raf=0;
-let pHP=100,pMax=100,pAttack=40,pSuper=80;
-let starCount=0,superReady=true;
-let fireCooldown=0,superCooldown=0;
+let pHP=100,pMax=100,pAttack=40,pSuper=80,starCount=0,superReady=true,fireCooldown=0,superCooldown=0;
 let joy={x:0,y:0},lastTime=0;
 const arenaRadius=13;
-
-function makeFighter(color,x,z,scale=1){
-const g=new THREE.Group();
-const body=new THREE.Mesh(
-new THREE.CylinderGeometry(.55*scale,.7*scale,1.15*scale,16),
-new THREE.MeshStandardMaterial({color,roughness:.55})
-);
-body.position.y=.75*scale;
-g.add(body);
-const head=new THREE.Mesh(
-new THREE.SphereGeometry(.42*scale,16,12),
-new THREE.MeshStandardMaterial({color:0xffd2a3})
-);
-head.position.y=1.55*scale;
-g.add(head);
-const visor=new THREE.Mesh(
-new THREE.BoxGeometry(.48*scale,.13*scale,.08*scale),
-new THREE.MeshStandardMaterial({color:0x21143b,emissive:0x5b2c91})
-);
-visor.position.set(0,1.58*scale,.38*scale);
-g.add(visor);
-g.position.set(x,0,z);
-return g;
-}
-
-function makeStar(x,z){
-const mesh=new THREE.Mesh(
-new THREE.OctahedronGeometry(.55),
-new THREE.MeshStandardMaterial({color:0xffd83d,emissive:0x8a5800})
-);
-mesh.position.set(x,.9,z);
-return mesh;
-}
-
-function applyQuality(){
-if(!renderer)return;
-const q=settings.quality;
-renderer.setPixelRatio(Math.min(devicePixelRatio,q==="low"?.8:q==="medium"?1.2:1.7));
-renderer.shadowMap.enabled=q==="high";
-renderer.setSize(
-document.getElementById("arenaWrap").clientWidth,
-document.getElementById("arenaWrap").clientHeight,
-false
-);
-}
-
-function init3D(){
-if(renderer)return;
-const canvas=document.getElementById("game3d");
-renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
-scene=new THREE.Scene();
-scene.background=new THREE.Color(0x171027);
-scene.fog=new THREE.Fog(0x171027,22,48);
-camera=new THREE.PerspectiveCamera(55,1,.1,100);
-camera.position.set(0,18,18);
-camera.lookAt(0,0,0);
-scene.add(new THREE.HemisphereLight(0xc8aaff,0x302044,2));
-const light=new THREE.DirectionalLight(0xffffff,2.1);
-light.position.set(-7,14,8);
-light.castShadow=true;
-scene.add(light);
-
-const floor=new THREE.Mesh(
-new THREE.CylinderGeometry(arenaRadius,arenaRadius,.5,64),
-new THREE.MeshStandardMaterial({color:0x39245a,roughness:.9})
-);
-floor.position.y=-.3;
-floor.receiveShadow=true;
-scene.add(floor);
-
-const grid=new THREE.GridHelper(arenaRadius*2,26,0x9c65cb,0x60427b);
-grid.position.y=-.03;
-scene.add(grid);
-
-const wallMat=new THREE.MeshStandardMaterial({color:0x6d3a91});
-for(let i=0;i<24;i++){
-const a=i/24*Math.PI*2;
-const wall=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.2,.7),wallMat);
-wall.position.set(Math.cos(a)*arenaRadius,.35,Math.sin(a)*arenaRadius);
-wall.rotation.y=-a;
-scene.add(wall);
-}
-
-player=makeFighter(0x55baff,0,0,1.05);
-scene.add(player);
-applyQuality();
-window.addEventListener("resize",resize3D);
-}
-
-function resize3D(){
-if(!renderer)return;
-const wrap=document.getElementById("arenaWrap");
-const w=wrap.clientWidth,h=wrap.clientHeight;
-renderer.setSize(w,h,false);
-camera.aspect=w/h;
-camera.updateProjectionMatrix();
-}
-
-function start3D(){
-if(!window.THREE){
-alert("Не вдалося завантажити 3D-бібліотеку. Перевір інтернет.");
-return;
-}
-init3D();
-showScreen("showdown3d");
-resize3D();
-game3dRunning=true;
-
-pMax=fighters[selected].hp;
-pHP=pMax;
-pAttack=fighters[selected].attack;
-pSuper=specialOf(fighters[selected]);
-starCount=0;
-superReady=true;
-fireCooldown=0;
-superCooldown=0;
-joy.x=joy.y=0;
-
-botObjects.forEach(b=>scene.remove(b.mesh));
-starObjects.forEach(s=>scene.remove(s));
-bulletObjects.forEach(b=>scene.remove(b.mesh));
-botObjects=[];
-starObjects=[];
-bulletObjects=[];
-
-for(let i=0;i<6;i++){
-const a=i/6*Math.PI*2;
-const b=makeFighter(
-[0xff555f,0xff9b45,0xb57aff,0x66dc83,0xff68c8,0xd4d9e8][i],
-Math.cos(a)*8,Math.sin(a)*8,.9
-);
-scene.add(b);
-botObjects.push({
-mesh:b,hp:100,attack:10+Math.floor(Math.random()*8),
-cool:Math.random(),alive:true
-});
-}
-
-for(let i=0;i<7;i++)spawnStar();
-updateHUD();
-say3D("Збирай зірки та перемагай ботів!");
-lastTime=performance.now();
-cancelAnimationFrame(raf);
-loop3D(lastTime);
-}
-
-function spawnStar(){
-const a=Math.random()*Math.PI*2;
-const r=2+Math.random()*9;
-const s=makeStar(Math.cos(a)*r,Math.sin(a)*r);
-scene.add(s);
-starObjects.push(s);
-}
-
-function updateHUD(){
-document.getElementById("hpHud").textContent=Math.ceil(pHP)+"/"+pMax;
-document.getElementById("starsHud").textContent=starCount;
-document.getElementById("botsHud").textContent=botObjects.filter(b=>b.alive).length;
-}
-
-function say3D(t){
-document.getElementById("message3d").textContent=t;
-}
-
-function loop3D(now){
-if(!game3dRunning)return;
-const dt=Math.min(.04,(now-lastTime)/1000||.016);
-lastTime=now;
-
-fireCooldown=Math.max(0,fireCooldown-dt);
-superCooldown=Math.max(0,superCooldown-dt);
-
-player.position.x+=joy.x*7*dt;
-player.position.z+=joy.y*7*dt;
-
-const len=Math.hypot(player.position.x,player.position.z);
-if(len>arenaRadius-1.3){
-player.position.x*=((arenaRadius-1.3)/len);
-player.position.z*=((arenaRadius
-if(len>arenaRadius-1.3){
-player.position.x*=((arenaRadius-1.3)/len);
-player.position.z*=((arenaRadius-1.3)/len);
-}
-
-// Поворот камери за гравцем
-camera.position.x=player.position.x;
-camera.position.z=player.position.z+18;
-camera.lookAt(player.position.x,0,player.position.z);
-
-// Рух ботів
-botObjects.forEach(b=>{
-if(!b.alive)return;
-
-const dx=player.position.x-b.mesh.position.x;
-const dz=player.position.z-b.mesh.position.z;
-const dist=Math.hypot(dx,dz);
-
-if(dist>1.8){
-b.mesh.position.x+=(dx/dist)*2.1*dt;
-b.mesh.position.z+=(dz/dist)*2.1*dt;
-}
-
-// Атака бота
-b.cool-=dt;
-if(dist<2.1&&b.cool<=0){
-pHP=Math.max(0,pHP-b.attack);
-b.cool=1.2;
-vibrate(50);
-updateHUD();
-say3D("👹 Бот атакує!");
-}
-});
-
-// Збирання зірок
-starObjects.forEach((s,i)=>{
-s.rotation.y+=dt*2;
-const dx=player.position.x-s.position.x;
-const dz=player.position.z-s.position.z;
-
-if(Math.hypot(dx,dz)<1.2){
-scene.remove(s);
-starObjects.splice(i,1);
-starCount++;
-spawnStar();
-updateHUD();
-playSound(800);
-say3D("⭐ +1 зірка!");
-}
-});
-
-// Рух куль
-bulletObjects.forEach((b,i)=>{
-b.mesh.position.x+=b.vx*dt;
-b.mesh.position.z+=b.vz*dt;
-b.life-=dt;
-
-let hit=false;
-
-botObjects.forEach(bot=>{
-if(!bot.alive)return;
-
-const dx=b.mesh.position.x-bot.mesh.position.x;
-const dz=b.mesh.position.z-bot.mesh.position.z;
-
-if(Math.hypot(dx,dz)<1){
-bot.hp-=b.damage;
-hit=true;
-
-if(bot.hp<=0){
-bot.alive=false;
-scene.remove(bot.mesh);
-starCount+=2;
-spawnStar();
-updateHUD();
-say3D("💥 Бота переможено! +2 зірки");
-}
-}
-});
-
-if(hit||b.life<=0){
-scene.remove(b.mesh);
-bulletObjects.splice(i,1);
-}
-});
-
-// Перевірка перемоги та поразки
-const alive=botObjects.filter(b=>b.alive).length;
-
-if(pHP<=0){
-pHP=0;
-game3dRunning=false;
-updateHUD();
-say3D("💀 Поразка! Спробуй ще раз.");
-return;
-}
-
-if(alive===0){
-game3dRunning=false;
-coins+=20+starCount*2;
-updateCoins();
-updateHUD();
-say3D("🏆 ПЕРЕМОГА! +"+(20+starCount*2)+" Flayyers");
-return;
-}
-
-updateHUD();
-renderer.render(scene,camera);
-raf=requestAnimationFrame(loop3D);
-}
-
-// СТРІЛЬБА
-
-function shoot3D(isSuper=false){
-if(!game3dRunning)return;
-
-if(isSuper){
-if(!superReady)return;
-superReady=false;
-superCooldown=5;
-}else{
-if(fireCooldown>0)return;
-fireCooldown=.35;
-}
-
-const targets=botObjects.filter(b=>b.alive);
-if(!targets.length)return;
-
-let target=null;
-let best=Infinity;
-
-targets.forEach(b=>{
-const dx=b.mesh.position.x-player.position.x;
-const dz=b.mesh.position.z-player.position.z;
-const dist=Math.hypot(dx,dz);
-
-if(dist<best){
-best=dist;
-target=b;
-}
-});
-
-if(!target)return;
-
-const dx=target.mesh.position.x-player.position.x;
-const dz=target.mesh.position.z-player.position.z;
-const dist=Math.hypot(dx,dz)||1;
-
-const bullet=new THREE.Mesh(
-new THREE.SphereGeometry(isSuper?.32:.19,12,12),
-new THREE.MeshStandardMaterial({
-color:isSuper?0xffc52e:0x55caff,
-emissive:isSuper?0xff8800:0x2277ff
-})
-);
-
-bullet.position.set(
-player.position.x,
-1,
-player.position.z
-);
-
-scene.add(bullet);
-
-bulletObjects.push({
-mesh:bullet,
-vx:dx/dist*(isSuper?15:12),
-vz:dz/dist*(isSuper?15:12),
-damage:isSuper?pSuper:pAttack,
-life:2
-});
-
-playSound(isSuper?850:450);
-vibrate(isSuper?100:25);
-say3D(isSuper?"💥 СУПЕРАТАКА!":"🎯 АТАКА!");
-}
-
-// ДЖОЙСТИК
-
-const joystick=document.getElementById("joystick");
-const stick=document.getElementById("stick");
-
-let joyPointer=null;
-
-function moveJoystick(e){
-const rect=joystick.getBoundingClientRect();
-const cx=rect.left+rect.width/2;
-const cy=rect.top+rect.height/2;
-
-let dx=e.clientX-cx;
-let dy=e.clientY-cy;
-
-const max=rect.width*.34;
-const dist=Math.hypot(dx,dy);
-
-if(dist>max){
-dx=dx/dist*max;
-dy=dy/dist*max;
-}
-
-joy.x=dx/max;
-joy.y=dy/max;
-
-stick.style.left=(rect.width/2-26+dx)+"px";
-stick.style.top=(rect.height/2-26+dy)+"px";
-}
-
-function resetJoystick(){
-joy.x=0;
-joy.y=0;
-stick.style.left=(joystick.clientWidth-52)/2+"px";
-stick.style.top=(joystick.clientHeight-52)/2+"px";
-joyPointer=null;
-}
-
-joystick.addEventListener("pointerdown",e=>{
-if(joyPointer!==null)return;
-joyPointer=e.pointerId;
-joystick.setPointerCapture(e.pointerId);
-moveJoystick(e);
-});
-
-joystick.addEventListener("pointermove",e=>{
-if(e.pointerId===joyPointer)moveJoystick(e);
-});
-
-joystick.addEventListener("pointerup",e=>{
-if(e.pointerId===joyPointer)resetJoystick();
-});
-
+function makeFighter(color,x,z,scale=1){const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CylinderGeometry(.55*scale,.7*scale,1.15*scale,16),new THREE.MeshStandardMaterial({color,roughness:.55}));body.position.y=.75*scale;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(.42*scale,16,12),new THREE.MeshStandardMaterial({color:0xffd2a3}));head.position.y=1.55*scale;g.add(head);const visor=new THREE.Mesh(new THREE.BoxGeometry(.48*scale,.13*scale,.08*scale),new THREE.MeshStandardMaterial({color:0x21143b,emissive:0x5b2c91}));visor.position.set(0,1.58*scale,.38*scale);g.add(visor);g.position.set(x,0,z);return g}
+function makeStar(x,z){const mesh=new THREE.Mesh(new THREE.OctahedronGeometry(.55),new THREE.MeshStandardMaterial({color:0xffd83d,emissive:0x8a5800}));mesh.position.set(x,.9,z);return mesh}
+function applyQuality(){if(!renderer)return;const q=settings.quality;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,q==="low"?.8:q==="medium"?1.2:1.7));renderer.shadowMap.enabled=q==="high";resize3D()}
+function init3D(){if(renderer)return;const canvas=document.getElementById("game3d");renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});scene=new THREE.Scene();scene.background=new THREE.Color(0x171027);scene.fog=new THREE.Fog(0x171027,22,48);camera=new THREE.PerspectiveCamera(55,1,.1,100);camera.position.set(0,18,18);camera.lookAt(0,0,0);scene.add(new THREE.HemisphereLight(0xc8aaff,0x302044,2));const light=new THREE.DirectionalLight(0xffffff,2.1);light.position.set(-7,14,8);light.castShadow=true;scene.add(light);const floor=new THREE.Mesh(new THREE.CylinderGeometry(arenaRadius,arenaRadius,.5,64),new THREE.MeshStandardMaterial({color:0x39245a,roughness:.9}));floor.position.y=-.3;scene.add(floor);const grid=new THREE.GridHelper(arenaRadius*2,26,0x9c65cb,0x60427b);grid.position.y=-.03;scene.add(grid);const wallMat=new THREE.MeshStandardMaterial({color:0x6d3a91});for(let i=0;i<24;i++){const a=i/24*Math.PI*2,w=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.2,.7),wallMat);w.position.set(Math.cos(a)*arenaRadius,.35,Math.sin(a)*arenaRadius);w.rotation.y=-a;scene.add(w)}player=makeFighter(0x55baff,0,0,1.05);scene.add(player);applyQuality();window.addEventListener("resize",resize3D)}
+function resize3D(){if(!renderer)return;const wrap=document.getElementById("arenaWrap"),w=Math.max(1,wrap.clientWidth),h=Math.max(1,wrap.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+function start3D(){if(!window.THREE){alert("Не вдалося завантажити 3D-бібліотеку. Перевір інтернет.");return}init3D();showScreen("showdown3d");resize3D();game3dRunning=true;pMax=fighters[selected].hp;pHP=pMax;pAttack=fighters[selected].attack;pSuper=specialOf(fighters[selected]);starCount=0;superReady=true;fireCooldown=0;superCooldown=0;resetJoystick();botObjects.forEach(b=>scene.remove(b.mesh));starObjects.forEach(s=>scene.remove(s));bulletObjects.forEach(b=>scene.remove(b.mesh));botObjects=[];starObjects=[];bulletObjects=[];for(let i=0;i<6;i++){const a=i/6*Math.PI*2,b=makeFighter([0xff555f,0xff9b45,0xb57aff,0x66dc83,0xff68c8,0xd4d9e8][i],Math.cos(a)*8,Math.sin(a)*8,.9);scene.add(b);botObjects.push({mesh:b,hp:100,attack:10+Math.floor(Math.random()*8),cool:Math.random(),alive:true})}for(let i=0;i<7;i++)spawnStar();updateHUD();say3D("Збирай зірки та перемагай ботів!");lastTime=performance.now();cancelAnimationFrame(raf);loop3D(lastTime)}
+function spawnStar(){const a=Math.random()*Math.PI*2,r=2+Math.random()*9,s=makeStar(Math.cos(a)*r,Math.sin(a)*r);scene.add(s);starObjects.push(s)}
+function updateHUD(){document.getElementById("hpHud").textContent=Math.ceil(pHP)+"/"+pMax;document.getElementById("starsHud").textContent=starCount;document.getElementById("botsHud").textContent=botObjects.filter(b=>b.alive).length}
+function say3D(t){document.getElementById("message3d").textContent=t}
+function loop3D(now){if(!game3dRunning)return;const dt=Math.min(.04,(now-lastTime)/1000||.016);lastTime=now;fireCooldown=Math.max(0,fireCooldown-dt);superCooldown=Math.max(0,superCooldown-dt);if(superCooldown===0)superReady=true;player.position.x+=joy.x*7*dt;player.position.z+=joy.y*7*dt;const len=Math.hypot(player.position.x,player.position.z);if(len>arenaRadius-1.3){player.position.x*=((arenaRadius-1.3)/len);player.position.z*=((arenaRadius-1.3)/len)}camera.position.x+=(player.position.x-camera.position.x*.0)*0;camera.position.set(player.position.x,18,player.position.z+18);camera.lookAt(player.position.x,0,player.position.z);
+for(const b of botObjects){if(!b.alive)continue;const dx=player.position.x-b.mesh.position.x,dz=player.position.z-b.mesh.position.z,d=Math.hypot(dx,dz)||1;if(d>1.7){b.mesh.position.x+=dx/d*2.1*dt;b.mesh.position.z+=dz/d*2.1*dt}b.cool-=dt;if(d<2&&b.cool<=0){pHP=Math.max(0,pHP-b.attack);b.cool=1.1;vibrate(35);updateHUD()}}
+for(let i=starObjects.length-1;i>=0;i--){const s=starObjects[i];s.rotation.y+=dt*2;if(Math.hypot(player.position.x-s.position.x,player.position.z-s.position.z)<1.25){scene.remove(s);starObjects.splice(i,1);starCount++;spawnStar();updateHUD();say3D("⭐ Зірку зібрано!")}}
+for(let i=bulletObjects.length-1;i>=0;i--){const b=bulletObjects[i];b.mesh.position.x+=b.vx*dt;b.mesh.position.z+=b.vz*dt;b.life-=dt;let hit=false;for(const bot of botObjects){if(!bot.alive)continue;if(Math.hypot(b.mesh.position.x-bot.mesh.position.x,b.mesh.position.z-bot.mesh.position.z)<.9){bot.hp-=b.damage;hit=true;if(bot.hp<=0){bot.alive=false;scene.remove(bot.mesh);starCount+=2;say3D("💥 Бота переможено! +2 зірки");updateHUD()}break}}if(hit||b.life<=0){scene.remove(b.mesh);bulletObjects.splice(i,1)}}
+if(pHP<=0){game3dRunning=false;say3D("💀 Поразка! Натисни вихід.");updateHUD()}else if(botObjects.every(b=>!b.alive)){game3dRunning=false;coins+=20;updateCoins();say3D("🏆 ПЕРЕМОГА! +20 Flayyers");updateHUD()}renderer.render(scene,camera);if(game3dRunning)raf=requestAnimationFrame(loop3D)}
+function shoot3D(isSuper=false){if(!game3dRunning)return;if(isSuper){if(!superReady){say3D("⏳ Суператака перезаряджається!");return}superReady=false;superCooldown=5}else if(fireCooldown>0)return;else fireCooldown=.35;let target=null,best=Infinity;for(const b of botObjects){if(!b.alive)continue;const d=Math.hypot(b.mesh.position.x-player.position.x,b.mesh.position.z-player.position.z);if(d<best){best=d;target=b}}if(!target){say3D("Поруч немає ворогів!");return}const dx=target.mesh.position.x-player.position.x,dz=target.mesh.position.z-player.position.z,dist=Math.hypot(dx,dz)||1;const bullet=new THREE.Mesh(new THREE.SphereGeometry(isSuper?.32:.19,12,12),new THREE.MeshStandardMaterial({color:isSuper?0xffc52e:0x55caff,emissive:isSuper?0xff8800:0x2277ff}));bullet.position.set(player.position.x,1,player.position.z);scene.add(bullet);bulletObjects.push({mesh:bullet,vx:dx/dist*(isSuper?15:12),vz:dz/dist*(isSuper?15:12),damage:isSuper?pSuper:pAttack,life:2});playSound(isSuper?850:450);vibrate(isSuper?100:25);say3D(isSuper?"💥 СУПЕРАТАКА!":"🎯 АТАКА!")}
+const joystick=document.getElementById("joystick"),stick=document.getElementById("stick");let joyPointer=null;
+function moveJoystick(e){const rect=joystick.getBoundingClientRect(),cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;let dx=e.clientX-cx,dy=e.clientY-cy;const max=rect.width*.34,dist=Math.hypot(dx,dy);if(dist>max){dx=dx/dist*max;dy=dy/dist*max}joy.x=dx/max;joy.y=dy/max;stick.style.left=(rect.width/2-stick.offsetWidth/2+dx)+"px";stick.style.top=(rect.height/2-stick.offsetHeight/2+dy)+"px"}
+function resetJoystick(){joy.x=0;joy.y=0;if(joystick&&stick){stick.style.left=(joystick.clientWidth-stick.offsetWidth)/2+"px";stick.style.top=(joystick.clientHeight-stick.offsetHeight)/2+"px"}joyPointer=null}
+joystick.addEventListener("pointerdown",e=>{e.preventDefault();if(joyPointer!==null)return;joyPointer=e.pointerId;joystick.setPointerCapture(e.pointerId);moveJoystick(e)});
+joystick.addEventListener("pointermove",e=>{if(e.pointerId===joyPointer)moveJoystick(e)});
+joystick.addEventListener("pointerup",e=>{if(e.pointerId===joyPointer)resetJoystick()});
 joystick.addEventListener("pointercancel",resetJoystick);
-
-// КНОПКИ АТАКИ
-
-document.getElementById("fireBtn").addEventListener("pointerdown",e=>{
-e.preventDefault();
-shoot3D(false);
-});
-
-document.getElementById("superBtn").addEventListener("pointerdown",e=>{
-e.preventDefault();
-shoot3D(true);
-});
-
-// ВИХІД ІЗ 3D
-
-function exit3D(){
-game3dRunning=false;
-cancelAnimationFrame(raf);
-resetJoystick();
-showScreen("menu");
-}
-
-// КЛАСИЧНЕ ШД
-
-let oldGame={
-hp:100,
-enemy:100,
-stars:0,
-over:false
-};
-
-function startOldShowdown(){
-oldGame={
-hp:fighters[selected].hp,
-enemy:100,
-stars:0,
-over:false
-};
-
-showScreen("oldShowdown");
-renderOldShowdown();
-}
-
-function renderOldShowdown(){
-const f=fighters[selected];
-const root=document.getElementById("oldSD");
-
-root.innerHTML=`
-<div class="card">
-<h3>${f.emoji} ${f.name}</h3>
-<p>❤️ Твоє HP: <span id="oldHP">${oldGame.hp}</span></p>
-<p>👹 HP ворога: <span id="oldEnemy">${oldGame.enemy}</span></p>
-<p>⭐ Зірки: <span id="oldStars">${oldGame.stars}</span></p>
-</div>
-
-<div class="card">
-<button class="menu-button" id="oldAttack">🎯 АТАКА</button>
-<button class="menu-button" id="oldSuper">💥 СУПЕРАТАКА</button>
-<p id="oldMessage">Збери зірки та переможи!</p>
-</div>
-`;
-
-function oldTurn(damage){
-if(oldGame.over)return;
-
-oldGame.enemy=Math.max(0,oldGame.enemy-damage);
-
-if(oldGame.enemy===0){
-oldGame.over=true;
-oldGame.stars+=5;
-coins+=20;
-updateCoins();
-document.getElementById("oldMessage").textContent=
-"🏆 ПЕРЕМОГА! +20 Flayyers";
-}else{
-oldGame.hp=Math.max(0,oldGame.hp-12);
-
-if(oldGame.hp===0){
-oldGame.over=true;
-document.getElementById("oldMessage").textContent="💀 ПОРАЗКА!";
-}
-}
-
-document.getElementById("oldHP").textContent=oldGame.hp;
-document.getElementById("oldEnemy").textContent=oldGame.enemy;
-document.getElementById("oldStars").textContent=oldGame.stars;
-playSound(400);
-}
-
-document.getElementById("oldAttack").onclick=()=>{
-oldTurn(f.attack);
-};
-
-document.getElementById("oldSuper").onclick=()=>{
-if(oldGame.over)return;
-if(oldGame.used)return;
-
-oldGame.used=true;
-oldTurn(specialOf(f));
-};
-}
-
-// ЗАПУСК ГРИ
-
-loadSettings();
-updateCoins();
-renderFighters();
-renderShop();
-
-// Початковий екран
-showScreen("menu");
-
+document.getElementById("fireBtn").addEventListener("click",e=>{e.preventDefault();shoot3D(false)});
+document.getElementById("superBtn").addEventListener("click",e=>{e.preventDefault();shoot3D(true)});
+function exit3D(){game3dRunning=false;cancelAnimationFrame(raf);resetJoystick();showScreen("menu")}
+let oldGame={hp:100,enemy:100,stars:0,over:false,used:false};
+function startOldShowdown(){oldGame={hp:fighters[selected].hp,enemy:100,stars:0,over:false,used:false};showScreen("oldShowdown");renderOldShowdown()}
+function renderOldShowdown(){const f=fighters[selected],root=document.getElementById("oldSD");root.innerHTML=`<div class="card"><h3>${f.emoji} ${f.name}</h3><p>❤️ Твоє HP: <span id="oldHP">${oldGame.hp}</span></p><p>👹 HP ворога: <span id="oldEnemy">${oldGame.enemy}</span></p><p>⭐ Зірки: <span id="oldStars">${oldGame.stars}</span></p></div><div class="card"><button class="menu-button" id="oldAttack">🎯 АТАКА</button><button class="menu-button" id="oldSuper">💥 СУПЕРАТАКА</button><p id="oldMessage">Збери зірки та переможи!</p></div>`;function oldTurn(damage){if(oldGame.over)return;oldGame.enemy=Math.max(0,oldGame.enemy-damage);if(oldGame.enemy===0){oldGame.over=true;oldGame.stars+=5;coins+=20;updateCoins();document.getElementById("oldMessage").textContent="🏆 ПЕРЕМОГА! +20 Flayyers"}else{oldGame.hp=Math.max(0,oldGame.hp-12);if(oldGame.hp===0){oldGame.over=true;document.getElementById("oldMessage").textContent="💀 ПОРАЗКА!"}}document.getElementById("oldHP").textContent=oldGame.hp;document.getElementById("oldEnemy").textContent=oldGame.enemy;document.getElementById("oldStars").textContent=oldGame.stars;playSound(400)}document.getElementById("oldAttack").onclick=()=>oldTurn(f.attack);document.getElementById("oldSuper").onclick=()=>{if(oldGame.over||oldGame.used)return;oldGame.used=true;oldTurn(specialOf(f))}}
+loadSettings();updateCoins();renderFighters();renderShop();showScreen("menu");
 </script>
 </body>
 </html>
